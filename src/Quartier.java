@@ -5,9 +5,9 @@ public class Quartier {
 	private int idQuartier;
 	private String couleurFond;
 	private String couleurForme;
-	private String symbole;
+	private Symbole symbole;
 	
-	public Quartier(char type, int idQuartier, String couleurFond, String couleurForme, String symbole) {
+	public Quartier(char type, int idQuartier, String couleurFond, String couleurForme, Symbole symbole) {
 		
 		this.type = type;
 		this.idQuartier = idQuartier;
@@ -16,7 +16,7 @@ public class Quartier {
 		this.symbole = symbole;
 	}
 	
-	public String getSymbole() {
+	public Symbole getSymbole() {
 		return symbole;
 	}
 
