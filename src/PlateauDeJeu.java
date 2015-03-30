@@ -5,4 +5,5 @@ public class PlateauDeJeu extends JPanel{
 	
 	private Case cases[][];
 	
+	
 }
