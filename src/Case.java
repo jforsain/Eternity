@@ -1,6 +1,15 @@
+import java.awt.Polygon;
 
-public class Case {
+
+public abstract class Case extends Polygon {
 	
-	private Piece p;
+	protected int posX;
+	protected int posY;
 	
+	protected int getPosX() {
+		return posX;
+	}
+	protected int getPosY() {
+		return posY;
+	}
 }

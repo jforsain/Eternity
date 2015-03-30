@@ -249,6 +249,7 @@ public class PlateauDeJeu extends JPanel{
 			yP[2] = y3;
 		}
 	}
+	
 	private void dessinerFaceEst(Graphics graphics){
 		graphics.setColor(Color.YELLOW);
 		int x1 = 100, x2 = 50, x3 = 100;
