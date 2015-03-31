@@ -1,29 +1,31 @@
+package vue;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
+import modele.*;
 
-public class PlateauDeJeu extends JPanel{
+
+public class PlateauDeJeuVue extends JPanel implements Observer{
 	
 	private Case cases[][];
 	private String fileName;
 	private int rectSize = 100;
-	private int nbRow;
-	private int nbCol;
+	private int nbRow = 4;
+	private int nbCol = 4;
 	private int currentRow;
 	private int currentCol;
 	
-	public PlateauDeJeu(int nbRow, int nbCol)
-	{
-		this.nbRow = nbRow;
-		this.nbCol = nbCol;
-	}
+	/* La VUE connaît le MODELE */
+	private PlateauDeJeuModele plateauDeJeuModele;
 	
-	public void save()
+	public PlateauDeJeuVue(PlateauDeJeuModele pPlateauDeJeuModele)
 	{
+		this.plateauDeJeuModele = pPlateauDeJeuModele;
 		
+		this.plateauDeJeuModele.addObserver(this);
 	}
 	
 	public int getRectSize()
@@ -31,10 +33,6 @@ public class PlateauDeJeu extends JPanel{
 		return rectSize;
 	}
 	
-	public void selectPiece(int row, int col)
-	{
-		
-	}
 
 	public int getSelectedRow() {
 		return currentRow;
@@ -43,7 +41,6 @@ public class PlateauDeJeu extends JPanel{
 	public int getSelectedCol() {
 		return currentCol;
 	}
-	
 	
 	@Override
 	public int getWidth()
@@ -299,5 +296,11 @@ public class PlateauDeJeu extends JPanel{
 			yP[1] = y2;
 			yP[2] = y3;
 		}
+	}
+
+	@Override
+	public void update(String str) {
+		// TODO Auto-generated method stub
+		
 	}
 }
