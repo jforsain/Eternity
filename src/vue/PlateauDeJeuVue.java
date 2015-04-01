@@ -16,7 +16,7 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 	private int currentRow = -1;
 	private int currentCol = -1;
 	
-	/* La VUE connaît le MODELE */
+	/* La VUE connaï¿½t le MODELE */
 	private PlateauDeJeuModele plateauDeJeuModele;
 	
 	public PlateauDeJeuVue(PlateauDeJeuModele pPlateauDeJeuModele)
@@ -57,7 +57,7 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		return new Dimension(getWidth(), getHeight());
 	}
 	
-	/* C'est cette méthode qui s'occupe de dessiner le plateau de jeu */
+	/* C'est cette mï¿½thode qui s'occupe de dessiner le plateau de jeu */
 	@Override
 	public void paint(Graphics graphics)
 	{
@@ -87,6 +87,8 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 			x = 0;
 			y += 100;
 		}
+		
+		dessinerSelectionPiece(graphics, this.currentRow, this.currentCol);
 	}
 
 	private void dessinerFaceOuest(Graphics graphics) {
@@ -306,6 +308,7 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 	public void update(String str) {
 		// TODO Auto-generated method stub
 		
+		this.repaint();
 	}
 	
 	public int getCurrentRow() {
