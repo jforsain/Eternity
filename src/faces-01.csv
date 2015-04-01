@@ -1,0 +1,6 @@
+type;id_face;couleur;fond_forme;couleur_forme
+B;1;noir;;
+F;2;jaune;triangle;bleu
+F;3;bleu;zigzag;blanc
+F;4;rouge;couronnes;jaune
+F;5;rouge;lignes;jaune

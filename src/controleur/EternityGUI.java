@@ -53,11 +53,18 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	    this.setLocationRelativeTo(null);
 	    this.setVisible(true);
 	}
-
+	
+	/* Sélection de la case par le joueur */
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
+		int col, row;
 		Point point = arg0.getPoint();
+		
+		row = (int) point.getX() % 100;
+		col = (int) point.getY() % 100;
+		this.plateauDeJeuVue.setCurrentCol(col);
+		this.plateauDeJeuVue.setCurrentRow(row);
 	}
 
 	@Override

@@ -13,10 +13,8 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 	private Case cases[][];
 	private String fileName;
 	private int rectSize = 100;
-	private int nbRow = 4;
-	private int nbCol = 4;
-	private int currentRow;
-	private int currentCol;
+	private int currentRow = -1;
+	private int currentCol = -1;
 	
 	/* La VUE connaît le MODELE */
 	private PlateauDeJeuModele plateauDeJeuModele;
@@ -59,6 +57,7 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		return new Dimension(getWidth(), getHeight());
 	}
 	
+	/* C'est cette méthode qui s'occupe de dessiner le plateau de jeu */
 	@Override
 	public void paint(Graphics graphics)
 	{
@@ -296,10 +295,32 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 			yP[2] = y3;
 		}
 	}
-
+	
+	public void dessinerSelectionPiece(Graphics g, int pRow, int pCol)
+	{
+		g.setColor(Color.RED);
+		g.drawRect(pCol, pRow, 100, 100);
+	}
+	
 	@Override
 	public void update(String str) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public int getCurrentRow() {
+		return currentRow;
+	}
+
+	public void setCurrentRow(int currentRow) {
+		this.currentRow = currentRow;
+	}
+
+	public int getCurrentCol() {
+		return currentCol;
+	}
+
+	public void setCurrentCol(int currentCol) {
+		this.currentCol = currentCol;
 	}
 }
