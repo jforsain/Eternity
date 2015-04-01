@@ -1,5 +1,6 @@
 package controleur;
 import java.awt.BorderLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -56,7 +57,7 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		Point point = arg0.getPoint();
 	}
 
 	@Override

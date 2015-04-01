@@ -33,7 +33,6 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		return rectSize;
 	}
 	
-
 	public int getSelectedRow() {
 		return currentRow;
 	}
