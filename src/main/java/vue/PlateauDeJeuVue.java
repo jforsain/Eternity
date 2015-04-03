@@ -18,7 +18,7 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 	private int currentRow = -1;
 	private int currentCol = -1;
 	
-	/* La VUE conna�t le MODELE */
+	/* La VUE connait le MODELE */
 	private PlateauDeJeuModele plateauDeJeuModele;
 	
 	public PlateauDeJeuVue(PlateauDeJeuModele pPlateauDeJeuModele)
@@ -89,8 +89,15 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 			x = 0;
 			y += 100;
 		}
+<<<<<<< Upstream, based on origin/master
 		//dessinerSymboleTriangle(graphics);
 		paintCircle(graphics,50,0,20);
+=======
+//		paintTriangle(graphics);
+//		paintCarre(graphics);
+//		paintLine(graphics);
+		
+>>>>>>> 9c230d6 Terminaison des 4 symboles
 	}
 
 	private void dessinerFaceOuest(Graphics graphics) {
@@ -300,19 +307,80 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		}
 	}
 	
-	private void dessinerSymboleTriangle(Graphics graphics)
+	private void paintTriangle(Graphics graphics)
 	{
 		int x1 = 25, x2 = 50, x3 = 75;
 		int y1 = 0, y2 = 25, y3 = 0;
 		int x[] = new int[3];
 		int y[] = new int[3];
 		
+		x[0] = x1;
+		x[1] = x2;
+		x[2] = x3;
+		
+		y[0] = y1;
+		y[1] = y2;
+		y[2] = y3;
+		
 		graphics.setColor(Color.BLUE);
 		graphics.fillPolygon(x, y, 3);
 		graphics.setColor(Color.BLACK);
+<<<<<<< Upstream, based on origin/master
 		graphics.fillPolygon(x, y, 3);
 		
+=======
+		graphics.drawPolygon(x, y, 3);
+>>>>>>> 9c230d6 Terminaison des 4 symboles
 	}
+	
+	private void paintCarre(Graphics graphics)
+	{
+		int x1 = 40, x2 = 40, x3 = 60, x4 = 60;
+		int y1 = 0, y2 = 20, y3 = 20, y4 = 0;
+		int x[] = new int[4];
+		int y[] = new int[4];
+		
+		x[0] = x1;
+		x[1] = x2;
+		x[2] = x3;
+		x[3] = x4;
+		
+		y[0] = y1;
+		y[1] = y2;
+		y[2] = y3;
+		y[3] = y4;
+		
+		graphics.setColor(Color.YELLOW);
+		graphics.fillPolygon(x, y, 4);
+		graphics.setColor(Color.BLACK);
+		graphics.drawPolygon(x, y, 4);
+	}
+	
+	private void paintLine(Graphics graphics)
+	{
+		int x1 = 40, x2 = 40, x5 = 50, x3 = 60, x4 = 60;
+		int y1 = 0, y2 = 40, y5 = 50, y3 = 40, y4 = 0;
+		int x[] = new int[5];
+		int y[] = new int[5];
+		
+		x[0] = x1;
+		x[1] = x2;
+		x[2] = x5;
+		x[3] = x3;
+		x[4] = x4;
+		
+		y[0] = y1;
+		y[1] = y2;
+		y[2] = y5;
+		y[3] = y3;
+		y[4] = y4;
+		
+		graphics.setColor(Color.YELLOW);
+		graphics.fillPolygon(x, y, 5);
+		graphics.setColor(Color.BLACK);
+		graphics.drawPolygon(x, y, 5);
+	}
+	
 	public void update(String str) {
 		// TODO Auto-generated method stub
 		
