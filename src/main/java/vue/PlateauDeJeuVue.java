@@ -96,23 +96,16 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 			}
 			x = 0;
 			y += 100;
-<<<<<<< Upstream, based on origin/master
-		}
 //		dessinerSymboleTriangle(graphics);
 		paintCircle(graphics,50,0,20);
-=======
 		}
 		
 //		dessinerSymboleTriangle(graphics);
 //		paintCircle(graphics,50,0,20);
->>>>>>> 7bdb28e Termnasion des 4 symboles
 //		paintTriangle(graphics);
 //		paintCarre(graphics);
-<<<<<<< Upstream, based on origin/master
 //		paintLine(graphics);
-=======
 		paintLine(graphics);
->>>>>>> 7bdb28e Termnasion des 4 symboles
 		
 	}
 
@@ -401,7 +394,7 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		
 		/* ---- TEST PIVOT ---- */
 		 //GET THE ANGLE IN RADIANS
-        double angle = Math.toRadians(-90);
+        double angle = Math.toRadians(90);
 
         for(int i = 0; i < 5; i++)
         {
@@ -415,16 +408,16 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 	        double yT = ((double) xtmp * Math.sin(angle) + ytmp * Math.cos(angle));
 	
 	        //TRANSLATE BACK
-	        x[i] = (int)Math.ceil(xT) + 50;
-	        y[i] = (int)Math.ceil(yT) + 50;
+	        x[i] = (int)Math.round(xT) + 50;
+	        y[i] = (int)Math.round(yT) + 50;
 	        
         }
         
-        graphics.setColor(Color.GREEN);
+        graphics.setColor(Color.BLACK);
 		graphics.fillPolygon(x, y, 5);
 		graphics.setColor(Color.BLACK);
 		graphics.drawPolygon(x, y, 5);
-		
+        
 		for(int i = 0; i < 5; i++)
 		{
 			System.out.println(y[i]);
