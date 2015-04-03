@@ -89,15 +89,12 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 			x = 0;
 			y += 100;
 		}
-<<<<<<< Upstream, based on origin/master
-		//dessinerSymboleTriangle(graphics);
+//		dessinerSymboleTriangle(graphics);
 		paintCircle(graphics,50,0,20);
-=======
 //		paintTriangle(graphics);
 //		paintCarre(graphics);
 //		paintLine(graphics);
 		
->>>>>>> 9c230d6 Terminaison des 4 symboles
 	}
 
 	private void dessinerFaceOuest(Graphics graphics) {
@@ -325,12 +322,9 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		graphics.setColor(Color.BLUE);
 		graphics.fillPolygon(x, y, 3);
 		graphics.setColor(Color.BLACK);
-<<<<<<< Upstream, based on origin/master
+
 		graphics.fillPolygon(x, y, 3);
-		
-=======
 		graphics.drawPolygon(x, y, 3);
->>>>>>> 9c230d6 Terminaison des 4 symboles
 	}
 	
 	private void paintCarre(Graphics graphics)
