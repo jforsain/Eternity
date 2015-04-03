@@ -89,8 +89,8 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 			x = 0;
 			y += 100;
 		}
-		System.out.println("test");
-		dessinerSymboleTriangle(graphics);
+		//dessinerSymboleTriangle(graphics);
+		paintCircle(graphics,50,0,20);
 	}
 
 	private void dessinerFaceOuest(Graphics graphics) {
@@ -311,6 +311,7 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		graphics.fillPolygon(x, y, 3);
 		graphics.setColor(Color.BLACK);
 		graphics.fillPolygon(x, y, 3);
+		
 	}
 	public void update(String str) {
 		// TODO Auto-generated method stub
@@ -337,9 +338,11 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 	
 	public void paintCircle(Graphics g, int x, int y, int diameter) 
 	{
-		   super.paintComponent(g);
+		   x = x - diameter/2;
 		   Graphics2D g2d = (Graphics2D)g;
 		   Ellipse2D.Double circle = new Ellipse2D.Double(x, y, diameter, diameter);
+		   g2d.setColor(Color.BLUE);
 		   g2d.fill(circle);
+		   
 	}
 }
