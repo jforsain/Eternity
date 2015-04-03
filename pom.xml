@@ -95,7 +95,7 @@
 
 
 	<build>
-		<finalName>TP chien</finalName>
+		<finalName>eternity</finalName>
 
 		<plugins>
 			<plugin>

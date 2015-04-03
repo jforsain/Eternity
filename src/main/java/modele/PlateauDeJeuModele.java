@@ -45,19 +45,19 @@ public class PlateauDeJeuModele implements Observable{
 		
 	}
 	
-	@Override
+	
 	public void addObserver(modele.Observer observer) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+	
 	public void removeObserver() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
+	
 	public void notifyObserver(String str) {
 		// TODO Auto-generated method stub
 		

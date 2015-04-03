@@ -54,19 +54,18 @@ public class CsvFile01 implements CsvFile{
         }
     }
     
-	@Override
+	
 	public File getFile() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	
 	public List<String[]> getData() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public String[] getTitles() {
 		// TODO Auto-generated method stub
 		return null;

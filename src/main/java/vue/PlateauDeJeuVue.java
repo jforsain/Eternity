@@ -39,26 +39,26 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		return currentCol;
 	}
 	
-	@Override
+	
 	public int getWidth()
 	{
 		return 400;
 	}
 	
-	@Override
+	
 	public int getHeight()
 	{
 		return 400;
 	}
 	
-	@Override
+	
 	public Dimension getPreferredSize()
 	{
 		return new Dimension(getWidth(), getHeight());
 	}
 	
 	/* C'est cette m�thode qui s'occupe de dessiner le plateau de jeu */
-	@Override
+	
 	public void paint(Graphics graphics)
 	{
 		int x = 0;
@@ -304,7 +304,7 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		g.drawRect(pCol, pRow, 100, 100);
 	}
 	
-	@Override
+	
 	public void update(String str) {
 		// TODO Auto-generated method stub
 		
