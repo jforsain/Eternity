@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
+import java.util.Vector;
 
 import javax.swing.JPanel;
 
@@ -78,6 +79,13 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		dessinerFaceSud(graphics);
 		dessinerFaceOuest(graphics);
 		
+		/* double[] pt = {x, y};
+		AffineTransform.getRotateInstance(Math.toRadians(angle), center.x, center.y)
+		  .transform(pt, 0, pt, 0, 1); // specifying to use this double[] to hold coords
+		double newX = pt[0];
+		double newY = pt[1];
+		 */
+		
 		graphics.setColor(Color.BLACK);
 		for(int i = 0; i < 4; i++)
 		{
@@ -88,12 +96,23 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 			}
 			x = 0;
 			y += 100;
+<<<<<<< Upstream, based on origin/master
 		}
 //		dessinerSymboleTriangle(graphics);
 		paintCircle(graphics,50,0,20);
+=======
+		}
+		
+//		dessinerSymboleTriangle(graphics);
+//		paintCircle(graphics,50,0,20);
+>>>>>>> 7bdb28e Termnasion des 4 symboles
 //		paintTriangle(graphics);
 //		paintCarre(graphics);
+<<<<<<< Upstream, based on origin/master
 //		paintLine(graphics);
+=======
+		paintLine(graphics);
+>>>>>>> 7bdb28e Termnasion des 4 symboles
 		
 	}
 
@@ -373,6 +392,43 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		graphics.fillPolygon(x, y, 5);
 		graphics.setColor(Color.BLACK);
 		graphics.drawPolygon(x, y, 5);
+		
+		
+		for(int i = 0; i < 5; i++)
+		{
+			System.out.println(y[i]);
+		}
+		
+		/* ---- TEST PIVOT ---- */
+		 //GET THE ANGLE IN RADIANS
+        double angle = Math.toRadians(-90);
+
+        for(int i = 0; i < 5; i++)
+        {
+        	
+	        //FIRST TRANSLATE THE DIFFERENCE
+	        int xtmp = x[i] - 50;
+	        int ytmp = y[i] - 50;
+	
+	        //APPLY ROTATION
+	        double xT = ((double) xtmp * Math.cos(angle) - ytmp * Math.sin(angle));
+	        double yT = ((double) xtmp * Math.sin(angle) + ytmp * Math.cos(angle));
+	
+	        //TRANSLATE BACK
+	        x[i] = (int)Math.ceil(xT) + 50;
+	        y[i] = (int)Math.ceil(yT) + 50;
+	        
+        }
+        
+        graphics.setColor(Color.GREEN);
+		graphics.fillPolygon(x, y, 5);
+		graphics.setColor(Color.BLACK);
+		graphics.drawPolygon(x, y, 5);
+		
+		for(int i = 0; i < 5; i++)
+		{
+			System.out.println(y[i]);
+		}
 	}
 	
 	public void update(String str) {
@@ -404,7 +460,6 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		   Graphics2D g2d = (Graphics2D)g;
 		   Ellipse2D.Double circle = new Ellipse2D.Double(x, y, diameter, diameter);
 		   g2d.setColor(Color.BLUE);
-		   g2d.fill(circle);
-		   
+		   g2d.fill(circle);   
 	}
 }
