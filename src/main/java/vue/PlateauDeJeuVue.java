@@ -87,8 +87,8 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 			x = 0;
 			y += 100;
 		}
-		
-		dessinerSelectionPiece(graphics, this.currentRow, this.currentCol);
+		System.out.println("test");
+		dessinerSymboleTriangle(graphics);
 	}
 
 	private void dessinerFaceOuest(Graphics graphics) {
@@ -298,13 +298,18 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		}
 	}
 	
-	public void dessinerSelectionPiece(Graphics g, int pRow, int pCol)
+	private void dessinerSymboleTriangle(Graphics graphics)
 	{
-		g.setColor(Color.RED);
-		g.drawRect(pCol, pRow, 100, 100);
+		int x1 = 25, x2 = 50, x3 = 75;
+		int y1 = 0, y2 = 25, y3 = 0;
+		int x[] = new int[3];
+		int y[] = new int[3];
+		
+		graphics.setColor(Color.BLUE);
+		graphics.fillPolygon(x, y, 3);
+		graphics.setColor(Color.BLACK);
+		graphics.fillPolygon(x, y, 3);
 	}
-	
-	
 	public void update(String str) {
 		// TODO Auto-generated method stub
 		
