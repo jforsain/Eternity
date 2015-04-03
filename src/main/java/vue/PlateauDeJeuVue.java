@@ -2,6 +2,8 @@ package vue;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
 
 import javax.swing.JPanel;
 
@@ -314,6 +316,7 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		// TODO Auto-generated method stub
 		
 		this.repaint();
+		 
 	}
 	
 	public int getCurrentRow() {
@@ -330,5 +333,13 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 
 	public void setCurrentCol(int currentCol) {
 		this.currentCol = currentCol;
+	}
+	
+	public void paintCircle(Graphics g, int x, int y, int diameter) 
+	{
+		   super.paintComponent(g);
+		   Graphics2D g2d = (Graphics2D)g;
+		   Ellipse2D.Double circle = new Ellipse2D.Double(x, y, diameter, diameter);
+		   g2d.fill(circle);
 	}
 }
