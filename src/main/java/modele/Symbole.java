@@ -4,6 +4,6 @@ public enum Symbole {
 	
 	TRIANGLE,
 	CARRE,
-	RECTANGLE,
+	TRAIT,
 	ROND;
 }

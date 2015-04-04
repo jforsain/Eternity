@@ -11,6 +11,18 @@ public class PlateauDeJeuModele implements Observable{
 	private int currentCol;
 	
 	
+	public PlateauDeJeuModele()
+	{
+		cases = new Case[4][4];
+		for(int i = 0; i < cases.length; i++)
+		{
+			for(int j = 0; j < cases[i].length; j++)
+			{
+				cases[i][j] = new Vide(i * 100, j * 100);
+			}
+		}
+	}
+	
 	public void save()
 	{
 		
@@ -44,6 +56,7 @@ public class PlateauDeJeuModele implements Observable{
 	{
 		
 	}
+	
 	
 	
 	public void addObserver(modele.Observer observer) {
