@@ -99,19 +99,8 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		int col, row;
-		Point point = arg0.getPoint();
-		
-		row = (int) point.getX() % 100;
-		col = (int) point.getY() % 100;
-		
-		System.out.println(row);
-		this.plateauDeJeuVue.setCurrentCol(col);
-		this.plateauDeJeuVue.setCurrentRow(row);
-		
-		this.plateauDeJeuVue.update("");
-	}
 
+	}
 	
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub

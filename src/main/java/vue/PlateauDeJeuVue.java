@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Polygon;
 import java.awt.geom.Ellipse2D;
 import java.util.Vector;
 
@@ -64,256 +65,26 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 	
 	public void paint(Graphics graphics)
 	{
-		int x = 0;
-		int y = 0;
 		
 		super.paint(graphics);
 		
-		/* Dessine le plateau de jeu */
-		graphics.setColor(Color.GRAY);
-		graphics.fillRect(0, 0, getWidth(), getHeight());
-		
-		
-		dessinerFaceNord(graphics);
-		dessinerFaceEst(graphics);
-		dessinerFaceSud(graphics);
-		dessinerFaceOuest(graphics);
-		
-		/* double[] pt = {x, y};
-		AffineTransform.getRotateInstance(Math.toRadians(angle), center.x, center.y)
-		  .transform(pt, 0, pt, 0, 1); // specifying to use this double[] to hold coords
-		double newX = pt[0];
-		double newY = pt[1];
-		 */
-		
-		graphics.setColor(Color.BLACK);
-		for(int i = 0; i < 4; i++)
-		{
-			for(int j = 0; j < 4; j++)
-			{
-				graphics.drawRect(x, y, 100, 100);
-				x += 100;
-			}
-			x = 0;
-			y += 100;
-//		dessinerSymboleTriangle(graphics);
-		paintCircle(graphics,50,0,20);
-		}
-		
-//		dessinerSymboleTriangle(graphics);
-//		paintCircle(graphics,50,0,20);
-//		paintTriangle(graphics);
-//		paintCarre(graphics);
-//		paintLine(graphics);
-		paintLine(graphics);
-		
-	}
-
-	private void dessinerFaceOuest(Graphics graphics) {
-		// TODO Auto-generated method stub
-		graphics.setColor(Color.GREEN);
-		int x1 = 0, x2 = 50, x3 = 0;
-		int y1 = 0, y2 = 50, y3 = 100;
-		
-		int xP[] = new int[3];
-		int yP[] = new int[3];
-		
-		xP[0] = x1;
-		xP[1] = x2;
-		xP[2] = x3;
-		
-		yP[0] = y1;
-		yP[1] = y2;
-		yP[2] = y3;
-		
-		for(int l = 0 ; l < 4; l++)
-		{	
-			for(int m = 0; m < 4; m++)
-			{
-				graphics.fillPolygon(xP, yP, 3);
-				graphics.setColor(Color.BLACK);
-				graphics.drawPolygon(xP, yP, 3);
-				graphics.setColor(Color.GREEN);
-				x1 += 100;
-				x2 += 100;
-				x3 += 100;
-				
-				xP[0] = x1;
-				xP[1] = x2;
-				xP[2] = x3;
-			}
+		paintPiece(graphics, (Piece) this.plateauDeJeuModele.getCases()[0][1]);
 			
-			x1 = 0;
-			x2 = 50;
-			x3 = 0;
-			
-			xP[0] = x1;
-			xP[1] = x2;
-			xP[2] = x3;
-			
-			y1 += 100;
-			y2 += 100;
-			y3 += 100;
-			
-			yP[0] = y1;
-			yP[1] = y2;
-			yP[2] = y3;
-		}
-	}
-
-	private void dessinerFaceSud(Graphics graphics) {
-		// TODO Auto-generated method stub
-		graphics.setColor(Color.BLUE);
-		int x1 = 0, x2 = 50, x3 = 100;
-		int y1 = 100, y2 = 50, y3 = 100;
-		
-		int xP[] = new int[3];
-		int yP[] = new int[3];
-		
-		xP[0] = x1;
-		xP[1] = x2;
-		xP[2] = x3;
-		
-		yP[0] = y1;
-		yP[1] = y2;
-		yP[2] = y3;
-		
-		for(int l = 0 ; l < 4; l++)
-		{	
-			for(int m = 0; m < 4; m++)
-			{
-				graphics.fillPolygon(xP, yP, 3);
-				graphics.setColor(Color.BLACK);
-				graphics.drawPolygon(xP, yP, 3);
-				graphics.setColor(Color.BLUE);
-				x1 += 100;
-				x2 += 100;
-				x3 += 100;
-				
-				xP[0] = x1;
-				xP[1] = x2;
-				xP[2] = x3;
-			}
-			
-			x1 = 0;
-			x2 = 50;
-			x3 = 100;
-			
-			xP[0] = x1;
-			xP[1] = x2;
-			xP[2] = x3;
-			
-			y1 += 100;
-			y2 += 100;
-			y3 += 100;
-			
-			yP[0] = y1;
-			yP[1] = y2;
-			yP[2] = y3;
-		}
-	}
-
-	private void dessinerFaceNord(Graphics graphics) {
-		// TODO Auto-generated method stub
-		graphics.setColor(Color.RED);
-		int x1 = 0, x2 = 50, x3 = 100;
-		int y1 = 0, y2 = 50, y3 = 0;
-		
-		int xP[] = new int[3];
-		int yP[] = new int[3];
-		
-		xP[0] = x1;
-		xP[1] = x2;
-		xP[2] = x3;
-		
-		yP[0] = y1;
-		yP[1] = y2;
-		yP[2] = y3;
-		
-		for(int l = 0 ; l < 4; l++)
-		{	
-			for(int m = 0; m < 4; m++)
-			{
-				graphics.fillPolygon(xP, yP, 3);
-				graphics.setColor(Color.BLACK);
-				graphics.drawPolygon(xP, yP, 3);
-				graphics.setColor(Color.RED);
-				x1 += 100;
-				x2 += 100;
-				x3 += 100;
-				
-				xP[0] = x1;
-				xP[1] = x2;
-				xP[2] = x3;
-			}
-			
-			x1 = 0;
-			x2 = 50;
-			x3 = 100;
-			
-			xP[0] = x1;
-			xP[1] = x2;
-			xP[2] = x3;
-			
-			y1 += 100;
-			y2 += 100;
-			y3 += 100;
-			
-			yP[0] = y1;
-			yP[1] = y2;
-			yP[2] = y3;
-		}
 	}
 	
-	private void dessinerFaceEst(Graphics graphics){
-		graphics.setColor(Color.YELLOW);
-		int x1 = 100, x2 = 50, x3 = 100;
-		int y1 = 0, y2 = 50, y3 = 100;
-		
-		int xP[] = new int[3];
-		int yP[] = new int[3];
-		
-		xP[0] = x1;
-		xP[1] = x2;
-		xP[2] = x3;
-		
-		yP[0] = y1;
-		yP[1] = y2;
-		yP[2] = y3;
-		
-		for(int l = 0 ; l < 4; l++)
-		{	
-			for(int m = 0; m < 4; m++)
-			{
-				graphics.fillPolygon(xP, yP, 3);
-				graphics.setColor(Color.BLACK);
-				graphics.drawPolygon(xP, yP, 3);
-				graphics.setColor(Color.YELLOW);
-				x1 += 100;
-				x2 += 100;
-				x3 += 100;
-				
-				xP[0] = x1;
-				xP[1] = x2;
-				xP[2] = x3;
-			}
-			
-			x1 = 100;
-			x2 = 50;
-			x3 = 100;
-			
-			xP[0] = x1;
-			xP[1] = x2;
-			xP[2] = x3;
-			
-			y1 += 100;
-			y2 += 100;
-			y3 += 100;
-			
-			yP[0] = y1;
-			yP[1] = y2;
-			yP[2] = y3;
+	public void paintPiece(Graphics graphics, Piece piece)
+	{
+		//1. On dessine les quartiers
+		for(int i = 0; i < 4; i++)
+		{
+			graphics.setColor(piece.getQuartiers()[i].getCouleurFond());
+			graphics.fillPolygon(piece.getQuartiers()[i]);
+			graphics.setColor(Color.BLACK);
+			graphics.drawPolygon(piece.getQuartiers()[i]);
 		}
+		
+		
+		//2. On dessine les symboles
 	}
 	
 	private void paintTriangle(Graphics graphics)

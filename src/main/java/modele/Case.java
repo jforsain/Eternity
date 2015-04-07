@@ -6,13 +6,17 @@ public abstract class Case extends Polygon {
 	
 	protected int posX;
 	protected int posY;
-	protected int weight = 100;
-	protected int height = 100;
 	
-	protected int getPosX() {
+	public Case(int pPosX, int pPosY)
+	{
+		this.posX = pPosX;
+		this.posY = pPosY;
+	}
+	
+	public int getPosX() {
 		return posX;
 	}
-	protected int getPosY() {
+	public int getPosY() {
 		return posY;
 	}
 }

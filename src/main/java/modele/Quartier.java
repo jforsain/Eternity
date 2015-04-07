@@ -1,14 +1,17 @@
 package modele;
 
-public class Quartier {
+import java.awt.Color;
+import java.awt.Polygon;
+
+public class Quartier extends Polygon{
 	
 	private char type;
 	private int idQuartier;
-	private String couleurFond;
-	private String couleurForme;
+	private Color couleurFond;
+	private Color couleurForme;
 	private Symbole symbole;
 	
-	public Quartier(char type, int idQuartier, String couleurFond, String couleurForme, Symbole symbole) {
+	public Quartier(char type, int idQuartier, Color couleurFond, Color couleurForme, Symbole symbole) {
 		
 		this.type = type;
 		this.idQuartier = idQuartier;
@@ -29,11 +32,11 @@ public class Quartier {
 		return idQuartier;
 	}
 	
-	public String getCouleurFond() {
+	public Color getCouleurFond() {
 		return couleurFond;
 	}
 	
-	public String getCouleurForme() {
+	public Color getCouleurForme() {
 		return couleurForme;
 	}
 }

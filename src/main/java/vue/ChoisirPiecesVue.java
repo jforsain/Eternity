@@ -4,7 +4,8 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
-import modele.Observer;
+import java.util.Observable;
+import java.util.Observer;
 
 public class ChoisirPiecesVue extends JPanel implements Observer{
 
@@ -31,6 +32,10 @@ public class ChoisirPiecesVue extends JPanel implements Observer{
 	{
 		return new Dimension(getWidth(), getHeight());
 	}
-	
-	
+
+
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
+	}
 }
