@@ -69,9 +69,11 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		super.paint(graphics);
 		
 		paintPiece(graphics, (Piece) this.plateauDeJeuModele.getCases()[0][0]);
+		
 			
 	}
 	
+	// Cette méthode s'occupe de dessiner les pièces avec leurs syboles respectifs.
 	public void paintPiece(Graphics graphics, Piece piece)
 	{
 		//1. On dessine les quartiers
@@ -83,10 +85,29 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 			graphics.drawPolygon(piece.getQuartiers()[i]);
 		}
 		
+		// Test des symboles
+//		paintDoubleHeightLine(graphics);
+//		paintDoubleWidthLine(graphics);
+//		paintSun(graphics);
+//		paintCouronne(graphics);
+		paintZigZag(graphics);
 		
 		//2. On dessine les symboles
+		
 	}
 	
+	// DONE
+	private void paintCouronne(Graphics graphics)
+	{
+		int xT[] = {45, 35, 45, 50, 55, 65, 55};
+		int yT[] = {0, 10, 10, 15, 10, 10, 0};
+		graphics.setColor(Color.WHITE);
+		graphics.fillPolygon(xT, yT, 7);
+		graphics.setColor(Color.BLACK);
+		graphics.drawPolygon(xT, yT, 7);
+	}
+	
+	// DONE
 	private void paintTriangle(Graphics graphics)
 	{
 		int x1 = 25, x2 = 50, x3 = 75;
@@ -110,6 +131,7 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		graphics.drawPolygon(x, y, 3);
 	}
 	
+	// DONE
 	private void paintCarre(Graphics graphics)
 	{
 		int x1 = 40, x2 = 40, x3 = 60, x4 = 60;
@@ -133,6 +155,7 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		graphics.drawPolygon(x, y, 4);
 	}
 	
+	// DONE
 	private void paintLine(Graphics graphics)
 	{
 		int x1 = 40, x2 = 40, x5 = 50, x3 = 60, x4 = 60;
@@ -195,24 +218,65 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		}
 	}
 	
+	// A compléter
 	private void paintZigZag(Graphics graphics)
 	{
+		int xT[] = {50, 40, 45, 40, 45, 40, 45, 40, 45, 40, 60, 65, 60, 65, 60, 65, 60, 65, 60};
+		int yT[] = {50, 40, 35, 30, 25, 20, 15, 10, 5 , 0,  0,  5,  10, 15, 20, 25, 30, 35, 40};
+		graphics.setColor(Color.WHITE);
+		graphics.fillPolygon(xT, yT, 19);
+		graphics.setColor(Color.BLACK);
+		graphics.drawPolygon(xT, yT, 19);
 		
 	}
 	
+	// DONE
 	private void paintSun(Graphics graphics)
 	{
-		
+		int xT[] = {35, 40, 40, 45, 50, 55, 60, 60, 65};
+		int yT[] = {0, 5, 10, 10 , 15, 10, 10, 5, 0};
+		graphics.setColor(Color.WHITE);
+		graphics.fillPolygon(xT, yT, 9);
+		graphics.setColor(Color.BLACK);
+		graphics.drawPolygon(xT, yT, 9);
 	}
 	
+	// DONE
 	private void paintDoubleWidthLine(Graphics graphics)
 	{
+		int xT[] = {35, 50, 65};
+		int yT[] = {35, 50, 35};
+		graphics.setColor(Color.YELLOW);
+		graphics.fillPolygon(xT, yT, 3);
+		graphics.setColor(Color.BLACK);
+		graphics.drawPolygon(xT, yT, 3);
 		
+		
+		int xT2[] = {15, 25, 75, 85};
+		int yT2[] = {15, 25, 25, 15};
+		graphics.setColor(Color.YELLOW);
+		graphics.fillPolygon(xT2, yT2, 4);
+		graphics.setColor(Color.BLACK);
+		graphics.drawPolygon(xT2, yT2, 4);
 	}
 	
+	// DONE
 	private void paintDoubleHeightLine(Graphics graphics)
 	{
+		int xT[] = {30, 30, 40 ,40};
+		int yT[] = {0, 30, 40, 0};
 		
+		int xT2[] = {60, 60, 70, 70};
+		int yT2[] = {0,40, 30, 0};
+		
+		graphics.setColor(Color.YELLOW);
+		graphics.fillPolygon(xT, yT, 4);
+		graphics.setColor(Color.BLACK);
+		graphics.drawPolygon(xT, yT, 4);
+		graphics.setColor(Color.YELLOW);
+		graphics.fillPolygon(xT2, yT2, 4);
+		graphics.setColor(Color.BLACK);
+		graphics.drawPolygon(xT2, yT2, 4);
 	}
 	
 	public void update(String str) {
