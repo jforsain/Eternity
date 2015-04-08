@@ -68,7 +68,7 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		
 		super.paint(graphics);
 		
-		paintPiece(graphics, (Piece) this.plateauDeJeuModele.getCases()[0][1]);
+		paintPiece(graphics, (Piece) this.plateauDeJeuModele.getCases()[0][0]);
 			
 	}
 	
@@ -193,6 +193,26 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		{
 			System.out.println(y[i]);
 		}
+	}
+	
+	private void paintZigZag(Graphics graphics)
+	{
+		
+	}
+	
+	private void paintSun(Graphics graphics)
+	{
+		
+	}
+	
+	private void paintDoubleWidthLine(Graphics graphics)
+	{
+		
+	}
+	
+	private void paintDoubleHeightLine(Graphics graphics)
+	{
+		
 	}
 	
 	public void update(String str) {
