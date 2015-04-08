@@ -3,6 +3,8 @@ package modele;
 import java.awt.Color;
 import java.awt.Polygon;
 
+import vue.Symbole;
+
 public class Quartier extends Polygon{
 	
 	private char type;

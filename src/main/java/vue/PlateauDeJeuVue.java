@@ -85,19 +85,39 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 			graphics.drawPolygon(piece.getQuartiers()[i]);
 		}
 		
-		// Test des symboles
-//		paintDoubleHeightLine(graphics);
-//		paintDoubleWidthLine(graphics);
-//		paintSun(graphics);
-//		paintCouronne(graphics);
-		paintZigZag(graphics);
-		
 		//2. On dessine les symboles
-		
+		for(int j = 0; j < 4; j++)
+		{
+			switch(piece.getQuartiers()[j].getSymbole())
+			{
+				case TRIANGLE:
+					paintTriangle(graphics, piece.getPosX() * 100, piece.getPosY() * 100, piece.getPosX() * 100 + 50, piece.getPosY() * 100 + 50, j, piece.getQuartiers()[j].getCouleurForme());
+					break;
+				case CARRE:
+					paintCarre(graphics, piece.getPosX() * 100, piece.getPosY() * 100, piece.getPosX() * 100 + 50, piece.getPosY() * 100 + 50, j, piece.getQuartiers()[j].getCouleurForme());
+					break;
+				case TRAIT:
+					paintLine(graphics, piece.getPosX() * 100, piece.getPosY() * 100, piece.getPosX() * 100 + 50, piece.getPosY() * 100 + 50, j, piece.getQuartiers()[j].getCouleurForme());
+					break;
+				case SUN:
+					paintSun(graphics, piece.getPosX() * 100, piece.getPosY() * 100, piece.getPosX() * 100 + 50, piece.getPosY() * 100 + 50, j, piece.getQuartiers()[j].getCouleurForme());
+					break;
+				case DOUBLELINEHEIGHT:
+					paintDoubleHeightLine(graphics, piece.getPosX() * 100, piece.getPosY() * 100, piece.getPosX() * 100 + 50, piece.getPosY() * 100 + 50, j, piece.getQuartiers()[j].getCouleurForme());
+					break;
+				case DOUBLELINEWIDTH:
+					paintDoubleWidthLine(graphics, piece.getPosX() * 100, piece.getPosY() * 100, piece.getPosX() * 100 + 50, piece.getPosY() * 100 + 50, j, piece.getQuartiers()[j].getCouleurForme());
+					break;
+				case KING:
+					paintCouronne(graphics, piece.getPosX() * 100, piece.getPosY() * 100, piece.getPosX() * 100 + 50, piece.getPosY() * 100 + 50, j, piece.getQuartiers()[j].getCouleurForme());
+					break;
+			}
+			
+		}
 	}
 	
 	// DONE
-	private void paintCouronne(Graphics graphics)
+	private void paintCouronne(Graphics graphics, int posX, int posY, int xCentre, int yCentre, int indice, Color couleurSymbole)
 	{
 		int xT[] = {45, 35, 45, 50, 55, 65, 55};
 		int yT[] = {0, 10, 10, 15, 10, 10, 0};
@@ -108,31 +128,61 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 	}
 	
 	// DONE
-	private void paintTriangle(Graphics graphics)
+	private void paintTriangle(Graphics graphics, int posX, int posY, int xCentre, int yCentre, int indice, Color couleurSymbole)
 	{
-		int x1 = 25, x2 = 50, x3 = 75;
-		int y1 = 0, y2 = 25, y3 = 0;
-		int x[] = new int[3];
-		int y[] = new int[3];
+		int tab[];
 		
-		x[0] = x1;
-		x[1] = x2;
-		x[2] = x3;
+		// Coordonées de départ
+		int xT[] = {25, 50, 75};
+		int yT[] = {0, 25, 0};
 		
-		y[0] = y1;
-		y[1] = y2;
-		y[2] = y3;
+		// 1. On additionne toutes ces coordonées par posX et posY
+		for(int i = 0; i < xT.length; i++)
+		{
+			xT[i] = xT[i] + posX;
+			yT[i] = yT[i] + posY;
+		}
+		// 2. On pivote si nécéssaire la figure par rapport à l'indice
+		if(indice != 0)
+		{
+			for(int i = 0; i < 3; i++)
+			{
+				tab = pivot(90 * indice, xT[i], yT[i], xCentre, yCentre);
+				xT[i] = tab[0];
+				yT[i] = tab[1];
+			}
+		}
 		
-		graphics.setColor(Color.BLUE);
-		graphics.fillPolygon(x, y, 3);
+		// 3. On dessine la figure
+		graphics.setColor(couleurSymbole);
+		graphics.fillPolygon(xT, yT, 3);
 		graphics.setColor(Color.BLACK);
-
-		graphics.fillPolygon(x, y, 3);
-		graphics.drawPolygon(x, y, 3);
+		graphics.drawPolygon(xT, yT, 3);
+		
 	}
 	
+	// Cette méthode permet de pivoter un point par rapport à un centre fournis en arguments
+		private int[] pivot(int angle, int pX, int pY, int pXCentre, int pYCentre)
+		{
+			int tabCoordonnees[] = new int[2];
+			
+			//FIRST TRANSLATE THE DIFFERENCE
+	        int xtmp = pX - pXCentre;
+	        int ytmp = pY - pYCentre;
+
+	        //APPLY ROTATION
+	        double xT = ((double) xtmp * Math.cos(Math.toRadians(angle)) - ytmp * Math.sin(Math.toRadians(angle)));
+	        double yT = ((double) xtmp * Math.sin(Math.toRadians(angle)) + ytmp * Math.cos(Math.toRadians(angle)));
+
+	        //TRANSLATE BACK
+	        tabCoordonnees[0] = (int)Math.round(xT) + pXCentre;
+	        tabCoordonnees[1] = (int)Math.round(yT) + pYCentre;
+	        
+			return tabCoordonnees;
+		}
+	
 	// DONE
-	private void paintCarre(Graphics graphics)
+	private void paintCarre(Graphics graphics, int posX, int posY, int xCentre, int yCentre, int indice, Color couleurSymbole)
 	{
 		int x1 = 40, x2 = 40, x3 = 60, x4 = 60;
 		int y1 = 0, y2 = 20, y3 = 20, y4 = 0;
@@ -156,7 +206,7 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 	}
 	
 	// DONE
-	private void paintLine(Graphics graphics)
+	private void paintLine(Graphics graphics, int posX, int posY, int xCentre, int yCentre, int indice, Color couleurSymbole)
 	{
 		int x1 = 40, x2 = 40, x5 = 50, x3 = 60, x4 = 60;
 		int y1 = 0, y2 = 40, y5 = 50, y3 = 40, y4 = 0;
@@ -231,7 +281,7 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 	}
 	
 	// DONE
-	private void paintSun(Graphics graphics)
+	private void paintSun(Graphics graphics, int posX, int posY, int xCentre, int yCentre, int indice, Color couleurSymbole)
 	{
 		int xT[] = {35, 40, 40, 45, 50, 55, 60, 60, 65};
 		int yT[] = {0, 5, 10, 10 , 15, 10, 10, 5, 0};
@@ -242,7 +292,7 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 	}
 	
 	// DONE
-	private void paintDoubleWidthLine(Graphics graphics)
+	private void paintDoubleWidthLine(Graphics graphics, int posX, int posY, int xCentre, int yCentre, int indice, Color couleurSymbole)
 	{
 		int xT[] = {35, 50, 65};
 		int yT[] = {35, 50, 35};
@@ -261,7 +311,7 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 	}
 	
 	// DONE
-	private void paintDoubleHeightLine(Graphics graphics)
+	private void paintDoubleHeightLine(Graphics graphics, int posX, int posY, int xCentre, int yCentre, int indice, Color couleurSymbole)
 	{
 		int xT[] = {30, 30, 40 ,40};
 		int yT[] = {0, 30, 40, 0};
