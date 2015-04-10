@@ -1,7 +1,11 @@
 package modele;
 
-public class PlateauDeJeuModele implements Observable{
+import java.util.Observable;
+import java.util.Observer;
+
+public class PlateauDeJeuModele extends Observable {
 	
+	public static int plateauTaille = 2;
 	/* Ne connait ni la VUE ni le CONTROLEUR */
 	
 	private Case cases[][];
@@ -13,9 +17,11 @@ public class PlateauDeJeuModele implements Observable{
 	
 	public PlateauDeJeuModele()
 	{
-		cases = new Case[4][4];
+		cases = new Case[plateauTaille][plateauTaille];
 		
-		cases[0][0] = new Piece(3, 1, 'N');
+		for(int i=0; i<plateauTaille;i++)
+			for(int j=0; j<plateauTaille;j++)
+				cases[i][j] = new Piece(i, j, 'N',this);
 	}
 	
 	public Case[][] getCases() {
@@ -56,20 +62,9 @@ public class PlateauDeJeuModele implements Observable{
 		
 	}
 	
-	public void addObserver(modele.Observer observer) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
-	public void removeObserver() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
-	public void notifyObserver(String str) {
-		// TODO Auto-generated method stub
-		
+	public void miseAJour()
+	{
+		setChanged();
+		notifyObservers();
 	}
 }
