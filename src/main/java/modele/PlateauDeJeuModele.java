@@ -5,7 +5,7 @@ import java.util.Observer;
 
 public class PlateauDeJeuModele extends Observable {
 	
-	public static int plateauTaille = 2;
+	public static int plateauTaille = 4;
 	/* Ne connait ni la VUE ni le CONTROLEUR */
 	
 	private Case cases[][];
