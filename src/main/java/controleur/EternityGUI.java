@@ -17,6 +17,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.SwingUtilities;
 
 import vue.ChoisirPiecesVue;
 import vue.PlateauDeJeuVue;
@@ -47,6 +48,8 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	
 	private JMenuItem item8 = new JMenuItem("Aide...");
 	private JMenuItem item9 = new JMenuItem("A propos...");
+	
+	private Piece iscliqued;
 	
 	public EternityGUI(PlateauDeJeuModele pPlateauDeJeuModele, PlateauDeJeuVue pPlateauDeJeuVue)
 	{
@@ -95,6 +98,7 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	    this.pack();
 	    this.setVisible(true);
 	    
+	    this.iscliqued = null;
 	}
 	
 	/* S�lection de la case par le joueur */
@@ -146,11 +150,32 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		
-		System.out.println("Click");
 		// TODO Auto-generated method stub
-		Piece tmp = (Piece) this.plateauDeJeuModele.getCases()[0][0];
-		tmp.tournerDroite();
-		
+		if (SwingUtilities.isRightMouseButton(e) || e.isControlDown())      
+		{
+			Piece tmp = (Piece) this.plateauDeJeuModele.getCases()[0][0];
+			tmp.tournerDroite();
+		}
+		else
+		{
+			// 100 pour taille case
+			int x = e.getX()/100; // n = Un/r - Uo  
+			int y = e.getY()/100; // n = Un/r - Uo  
+
+			System.out.println("case : x " + x + " : " + y );
+			if(iscliqued == null)
+			{
+				this.iscliqued = (Piece) this.plateauDeJeuModele.getCases()[x][y]; 
+				System.out.println("register");
+			}
+			else
+			{
+				System.out.println("changement");
+				Piece tmp = (Piece) this.plateauDeJeuModele.getCases()[x][y];
+				this.plateauDeJeuModele.inverser(this.iscliqued, tmp);
+				this.iscliqued = null;
+			}
+				
+		}
 	}
 }

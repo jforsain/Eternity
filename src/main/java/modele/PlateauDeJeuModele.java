@@ -47,6 +47,13 @@ public class PlateauDeJeuModele extends Observable {
 		return currentCol;
 	}
 	
+	public void inverser(Piece a, Piece b) {
+		
+		cases[a.posX][a.posY] = b.inverse(a);
+		cases[b.posX][b.posY] = a.inverse(b);
+		this.miseAJour();
+	}
+	
 	public void selectionnerPiece(int row, int col)
 	{
 		
