@@ -5,7 +5,7 @@ import java.util.Observer;
 
 public class PlateauDeJeuModele extends Observable {
 	
-	public static int plateauTaille = 2;
+	public static int plateauTaille = 4;
 	/* Ne connait ni la VUE ni le CONTROLEUR */
 	
 	private Case cases[][];
@@ -18,9 +18,13 @@ public class PlateauDeJeuModele extends Observable {
 	public PlateauDeJeuModele()
 	{
 		cases = new Case[4][4];
+
+		for(int i=0; i<plateauTaille;i++)
+			for(int j=0; j<plateauTaille;j++)
+				cases[i][j] = new Piece((i+j),i, j, 'N',this);
 		
 
-		cases[0][0] = new Piece(0, 0, 1, 'N', this);
+		//cases[0][0] = new Piece(0, 0, 1, 'N', this);
 	}
 	
 	public Case[][] getCases() {

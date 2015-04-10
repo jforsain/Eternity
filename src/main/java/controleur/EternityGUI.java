@@ -151,16 +151,19 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
+		
+		// 100 pour taille case
+		int x = e.getX()/100; // n = Un/r - Uo  
+		int y = e.getY()/100; // n = Un/r - Uo  
+		
 		if (SwingUtilities.isRightMouseButton(e) || e.isControlDown())      
 		{
-			Piece tmp = (Piece) this.plateauDeJeuModele.getCases()[0][0];
+			Piece tmp = (Piece) this.plateauDeJeuModele.getCases()[x][y];
 			tmp.tournerDroite();
 		}
 		else
 		{
-			// 100 pour taille case
-			int x = e.getX()/100; // n = Un/r - Uo  
-			int y = e.getY()/100; // n = Un/r - Uo  
+
 
 			System.out.println("case : x " + x + " : " + y );
 			
