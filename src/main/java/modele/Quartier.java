@@ -5,7 +5,7 @@ import java.awt.Polygon;
 
 import vue.Symbole;
 
-public class Quartier extends Polygon{
+public class Quartier {
 	
 	private char type;
 	private int idQuartier;

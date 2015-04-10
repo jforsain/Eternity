@@ -34,50 +34,8 @@ public class Piece extends Case implements Serializable{
 	// Cette méthode s'occupe d'initialiser les coordonées des 4 quartiers de la pièce de puzzle en fonction de sa position
 	private void initialiserPositionsQuartiers() {
 		
-		int tabCoordonnes[] = new int[2];
-		
 		int x1 = getPosX() * 100, xCentre = getPosX() * 100 + 50, x3 = getPosX() * 100 + 100;
 		int y1 = getPosY() * 100, yCentre = getPosY() * 100 + 50, y3 = getPosY() * 100;
-		
-		
-		// Boucle permettant d'affecter les coordonées x,y à nos 4 quartiers
-		for(int i = 0; i <= 3; i++)
-		{
-			
-			// 1. On ajoute les points dans le Quartier
-			quartiers[i].addPoint(x1, y1);
-			quartiers[i].addPoint(xCentre, yCentre);
-			quartiers[i].addPoint(x3, y3);
-			
-			// 2. On fait appel à notre fonction pivot sur (x1, y1) et (x3, y3) pour les faire pivoter de 90°
-			tabCoordonnes = pivot(90, x1, y1, xCentre, yCentre);
-			x1 = tabCoordonnes[0];
-			y1 = tabCoordonnes[1];
-			
-			tabCoordonnes = pivot(90, x3, y3, xCentre, yCentre);
-			x3 = tabCoordonnes[0];
-			y3 = tabCoordonnes[1];
-		}
-	}
-	
-	// Cette méthode permet de pivoter un point par rapport à un centre fournis en arguments
-	private int[] pivot(int angle, int pX, int pY, int pXCentre, int pYCentre)
-	{
-		int tabCoordonnees[] = new int[2];
-		
-		//FIRST TRANSLATE THE DIFFERENCE
-        int xtmp = pX - pXCentre;
-        int ytmp = pY - pYCentre;
-
-        //APPLY ROTATION
-        double xT = ((double) xtmp * Math.cos(Math.toRadians(angle)) - ytmp * Math.sin(Math.toRadians(angle)));
-        double yT = ((double) xtmp * Math.sin(Math.toRadians(angle)) + ytmp * Math.cos(Math.toRadians(angle)));
-
-        //TRANSLATE BACK
-        tabCoordonnees[0] = (int)Math.round(xT) + pXCentre;
-        tabCoordonnees[1] = (int)Math.round(yT) + pYCentre;
-        
-		return tabCoordonnees;
 	}
 
 	public char getOrientation() {
@@ -98,8 +56,6 @@ public class Piece extends Case implements Serializable{
 		quartiers[3] = tmp;
 		
 		plateauDeJeuModele.miseAJour();
-		
-		
 	}
 
 	public static int getId() {

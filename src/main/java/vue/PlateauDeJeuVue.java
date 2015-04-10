@@ -67,9 +67,7 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 	{
 		
 		super.paint(graphics);
-		for(int i=0; i<PlateauDeJeuModele.plateauTaille;i++)
-			for(int j=0; j<PlateauDeJeuModele.plateauTaille;j++)
-				paintPiece(graphics, (Piece) this.plateauDeJeuModele.getCases()[i][j]);
+		paintPiece(graphics, (Piece) this.plateauDeJeuModele.getCases()[0][0]);
 		
 			
 	}
@@ -80,16 +78,16 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		//1. On dessine les quartiers
 		for(int i = 0; i < 4; i++)
 		{
-			graphics.setColor(piece.getQuartiers()[i].getCouleurFond());
-			graphics.fillPolygon(piece.getQuartiers()[i]);
-			graphics.setColor(Color.BLACK);
-			graphics.drawPolygon(piece.getQuartiers()[i]);
+//			graphics.setColor(piece.getQuartiers()[i].getCouleurFond());
+//			graphics.fillPolygon(piece.getQuartiers()[i]);
+//			graphics.setColor(Color.BLACK);
+//			graphics.drawPolygon(piece.getQuartiers()[i]);
+			paintQuartier(graphics, piece.getQuartiers()[i], i, piece.getPosX(), piece.getPosY());
 		}
 		
 		//2. On dessine les symboles
 		for(int j = 0; j < 4; j++)
 		{
-		
 			switch(piece.getQuartiers()[j].getSymbole())
 			{
 
@@ -119,6 +117,35 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		}
 	}
 	
+	private void paintQuartier(Graphics graphics, Quartier quartier, int indice, int pPosX, int pPosY)
+	{
+		int tab[] = new int[2];
+		
+		int x1 = pPosX * 100, xCentre = pPosX * 100 + 50, x3 = pPosX * 100 + 100;
+		int y1 = pPosY * 100, yCentre = pPosY * 100 + 50, y3 = pPosY * 100;
+		
+		int xT[] = {x1, xCentre, x3};
+		int yT[] = {y1, yCentre, y3};
+		
+		
+		// 2. On pivote si nécéssaire la figure par rapport à l'indice
+		if(indice != 0)
+		{
+			for(int i = 0; i < 3; i++)
+			{
+				tab = pivot(90 * indice, xT[i], yT[i], xT[1], yT[1]);
+				xT[i] = tab[0];
+				yT[i] = tab[1];
+			}
+		}
+				
+		// 3. On dessine la figure
+		graphics.setColor(quartier.getCouleurFond());
+		graphics.fillPolygon(xT, yT, 3);
+		graphics.setColor(Color.BLACK);
+		graphics.drawPolygon(xT, yT, 3);
+		
+	}
 	// DONE
 	private void paintCouronne(Graphics graphics, int posX, int posY, int xCentre, int yCentre, int indice, Color couleurSymbole)
 	{
