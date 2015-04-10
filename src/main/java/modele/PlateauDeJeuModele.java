@@ -18,9 +18,6 @@ public class PlateauDeJeuModele extends Observable {
 	public PlateauDeJeuModele()
 	{
 		cases = new Case[4][4];
-		
-
-//		cases[0][0] = new Piece(0, 1, 'N',this);
 
 		for(int i=0; i<plateauTaille;i++)
 			for(int j=0; j<plateauTaille;j++)
