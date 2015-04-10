@@ -67,7 +67,9 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 	{
 		
 		super.paint(graphics);
-		paintPiece(graphics, (Piece) this.plateauDeJeuModele.getCases()[0][0]);
+//		for(int i = 0; i < this.plateauDeJeuModele.getCases()[i].length; i++)
+//			for(int j = 0; j < this.plateauDeJeuModele.getCases()[i]; i++)
+//				paintPiece(graphics, (Piece) this.plateauDeJeuModele.getCases()[0][0]);
 		
 			
 	}
