@@ -164,17 +164,40 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 			int y = e.getY()/100; // n = Un/r - Uo  
 
 			System.out.println("case : x " + x + " : " + y );
+			
 			if(iscliqued == null)
 			{
-				this.iscliqued = (Piece) this.plateauDeJeuModele.getCases()[x][y]; 
-				System.out.println("register");
+				try
+				{
+					this.iscliqued = (Piece) this.plateauDeJeuModele.getCases()[x][y];
+					System.out.println("register");
+				}
+				catch (Exception exeption)
+				{
+					this.iscliqued = null;
+					System.out.println("NOERRORregister");
+				}
+					
+				
 			}
 			else
 			{
-				System.out.println("changement");
-				Piece tmp = (Piece) this.plateauDeJeuModele.getCases()[x][y];
-				this.plateauDeJeuModele.inverser(this.iscliqued, tmp);
-				this.iscliqued = null;
+				
+				try
+				{
+					Piece tmp = (Piece) this.plateauDeJeuModele.getCases()[x][y];
+					if(tmp.getId() != this.iscliqued.getId()){
+						System.out.println("changement");
+						this.plateauDeJeuModele.inverser(this.iscliqued, tmp);
+					}
+					this.iscliqued = null;
+				}
+				catch (Exception exeption)
+				{
+					System.out.println("NOERROChangement");
+					this.iscliqued = null;
+				}
+
 			}
 				
 		}

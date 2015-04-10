@@ -7,19 +7,28 @@ import vue.Symbole;
 
 public class Piece extends Case implements Serializable{
 	
-	public static int id;
+	private int id;
 	private Quartier quartiers[] = new Quartier[4];
 	private char orientation;
 	private PlateauDeJeuModele plateauDeJeuModele;
 	
-	public Piece(int pPosX, int pPosY, char orientation, PlateauDeJeuModele pplateauDeJeuModele) {
+	public Piece(int id,int pPosX, int pPosY, char orientation, PlateauDeJeuModele pplateauDeJeuModele) {
 		super(pPosX, pPosY);
 		this.orientation = orientation;
 		initialiserParametresQuartiers();
 		initialiserPositionsQuartiers();
 		plateauDeJeuModele = pplateauDeJeuModele;
+		this.id = id;
 	}
 	
+	public Piece(Piece a) 
+	{
+		super(a.getPosX(), a.getPosY());
+		this.orientation = a.orientation;
+		this.quartiers = a.quartiers;
+		plateauDeJeuModele = a.plateauDeJeuModele;
+		this.id = a.id;
+	}
 	// Cette méthode s'occupe d'initialiser les paramètres des 4 quartiers
 	private void initialiserParametresQuartiers() {
 		
@@ -90,19 +99,19 @@ public class Piece extends Case implements Serializable{
 	}
 	public void tournerDroite() {
 		
-		Quartier tmp =  quartiers[0];
+		//Quartier tmp =  quartiers[1];//rouge
 		
-		quartiers[0] = quartiers[1];
-		quartiers[1] = quartiers[2]; 
-		quartiers[2] = quartiers[3]; 
-		quartiers[3] = tmp;
+		//quartiers[0] = quartiers[1]; // rouge
+		//quartiers[1] = quartiers[3]; //blanc
+		//quartiers[2] = quartiers[0]; //bleu 
+		//quartiers[3] = tmp;
 		
 		plateauDeJeuModele.miseAJour();
 		
 		
 	}
 
-	public static int getId() {
+	public int getId() {
 		return id;
 	}
 
@@ -116,6 +125,9 @@ public class Piece extends Case implements Serializable{
 		this.quartiers = a.quartiers;
 		this.orientation = a.orientation;
 		this.plateauDeJeuModele = a.plateauDeJeuModele;
+		
+		posX = a.getPosX();
+		posY = a.getPosY();
 		
 		return this;
 	}
