@@ -19,7 +19,12 @@ public class PlateauDeJeuModele extends Observable {
 	{
 		cases = new Case[4][4];
 		
-		cases[0][0] = new Piece(0, 1, 'N',this);
+
+//		cases[0][0] = new Piece(0, 1, 'N',this);
+
+		for(int i=0; i<plateauTaille;i++)
+			for(int j=0; j<plateauTaille;j++)
+				cases[i][j] = new Piece((i+j),i, j, 'N',this);
 	}
 	
 	public Case[][] getCases() {
@@ -47,8 +52,10 @@ public class PlateauDeJeuModele extends Observable {
 	
 	public void inverser(Piece a, Piece b) {
 		
-		cases[a.posX][a.posY] = b.inverse(a);
-		cases[b.posX][b.posY] = a.inverse(b);
+		Piece tmpA = new Piece(a);
+		Piece tmpB = new Piece(b);
+		cases[a.posX][a.posY] = tmpA.inverse(b);
+		cases[b.posX][b.posY] = tmpB.inverse(a);
 		this.miseAJour();
 	}
 	
