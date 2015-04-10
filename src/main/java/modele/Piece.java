@@ -57,11 +57,11 @@ public class Piece extends Case implements Serializable{
 	}
 	public void tournerDroite() {
 		
-		Quartier tmp =  quartiers[1];
+		Quartier tmp =  quartiers[0];//rouge
 		
-		quartiers[0] = quartiers[1]; 
-		quartiers[1] = quartiers[3]; 
-		quartiers[2] = quartiers[0];  
+		quartiers[0] = quartiers[1]; // rouge
+		quartiers[1] = quartiers[2]; //blanc
+		quartiers[2] = quartiers[3]; //bleu 
 		quartiers[3] = tmp;
 		
 		plateauDeJeuModele.miseAJour();
