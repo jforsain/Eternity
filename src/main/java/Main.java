@@ -1,3 +1,5 @@
+import javax.swing.JFrame;
+
 import vue.PlateauDeJeuVue;
 import modele.PlateauDeJeuModele;
 import controleur.EternityGUI;
@@ -10,6 +12,9 @@ public class Main {
 		PlateauDeJeuModele plateauDeJeuModele = new PlateauDeJeuModele();
 		PlateauDeJeuVue plateauDeJeuVue = new PlateauDeJeuVue(plateauDeJeuModele);
 		EternityGUI eternityGUI = new EternityGUI(plateauDeJeuModele, plateauDeJeuVue);
+		
+		plateauDeJeuVue.addMouseListener(eternityGUI);
+
 	}
 
 }

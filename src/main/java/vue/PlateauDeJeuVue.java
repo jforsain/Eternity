@@ -3,15 +3,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Polygon;
 import java.awt.geom.Ellipse2D;
-import java.util.Vector;
-
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.JPanel;
 
 import modele.*;
 
 
+@SuppressWarnings("serial")
 public class PlateauDeJeuVue extends JPanel implements Observer{
 	
 	private Case cases[][];
@@ -67,8 +67,9 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 	{
 		
 		super.paint(graphics);
-		
-		paintPiece(graphics, (Piece) this.plateauDeJeuModele.getCases()[0][0]);
+		for(int i=0; i<PlateauDeJeuModele.plateauTaille;i++)
+			for(int j=0; j<PlateauDeJeuModele.plateauTaille;j++)
+				paintPiece(graphics, (Piece) this.plateauDeJeuModele.getCases()[i][j]);
 		
 			
 	}
@@ -88,8 +89,10 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		//2. On dessine les symboles
 		for(int j = 0; j < 4; j++)
 		{
+		
 			switch(piece.getQuartiers()[j].getSymbole())
 			{
+
 				case TRIANGLE:
 					paintTriangle(graphics, piece.getPosX() * 100, piece.getPosY() * 100, piece.getPosX() * 100 + 50, piece.getPosY() * 100 + 50, j, piece.getQuartiers()[j].getCouleurForme());
 					break;
@@ -360,4 +363,13 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		   g2d.setColor(Color.BLUE);
 		   g2d.fill(circle);   
 	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		this.repaint();
+		
+	}
+	
+	
 }

@@ -10,12 +10,14 @@ public class Piece extends Case implements Serializable{
 	public static int id;
 	private Quartier quartiers[] = new Quartier[4];
 	private char orientation;
+	private PlateauDeJeuModele plateauDeJeuModele;
 	
-	public Piece(int pPosX, int pPosY, char orientation) {
+	public Piece(int pPosX, int pPosY, char orientation, PlateauDeJeuModele pplateauDeJeuModele) {
 		super(pPosX, pPosY);
 		this.orientation = orientation;
 		initialiserParametresQuartiers();
 		initialiserPositionsQuartiers();
+		plateauDeJeuModele = pplateauDeJeuModele;
 	}
 	
 	// Cette méthode s'occupe d'initialiser les paramètres des 4 quartiers
@@ -83,7 +85,21 @@ public class Piece extends Case implements Serializable{
 	}
 
 	public void setOrientation(char orientation) {
+				
 		this.orientation = orientation;
+	}
+	public void tournerDroite() {
+		
+		Quartier tmp =  quartiers[0];
+		
+		quartiers[0] = quartiers[1];
+		quartiers[1] = quartiers[2]; 
+		quartiers[2] = quartiers[3]; 
+		quartiers[3] = tmp;
+		
+		plateauDeJeuModele.miseAJour();
+		
+		
 	}
 
 	public static int getId() {
