@@ -175,7 +175,6 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 				catch (Exception exeption)
 				{
 					this.iscliqued = null;
-					System.out.println("NOERRORregister");
 				}
 					
 				
@@ -194,7 +193,6 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 				}
 				catch (Exception exeption)
 				{
-					System.out.println("NOERROChangement");
 					this.iscliqued = null;
 				}
 

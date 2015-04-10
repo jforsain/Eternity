@@ -51,8 +51,8 @@ public class PlateauDeJeuModele extends Observable {
 		
 		Piece tmpA = new Piece(a);
 		Piece tmpB = new Piece(b);
-		cases[a.posX][a.posY] = tmpB.inverse(a);
-		cases[b.posX][b.posY] = tmpA.inverse(b);
+		cases[a.posX][a.posY] = tmpA.inverse(b);
+		cases[b.posX][b.posY] = tmpB.inverse(a);
 		this.miseAJour();
 	}
 	
