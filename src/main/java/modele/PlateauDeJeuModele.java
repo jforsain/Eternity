@@ -15,7 +15,7 @@ public class PlateauDeJeuModele implements Observable{
 	{
 		cases = new Case[4][4];
 		
-		cases[0][0] = new Piece(0, 0, 'N');
+		cases[0][0] = new Piece(3, 1, 'N');
 	}
 	
 	public Case[][] getCases() {
