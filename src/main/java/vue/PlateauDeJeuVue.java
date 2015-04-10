@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.util.Observable;
 import java.util.Observer;
+
 import javax.swing.JPanel;
 
 import modele.*;
@@ -67,7 +68,9 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 	{
 		
 		super.paint(graphics);
-		paintPiece(graphics, (Piece) this.plateauDeJeuModele.getCases()[0][0]);
+		for(int i=0; i<PlateauDeJeuModele.plateauTaille;i++)
+			for(int j=0; j<PlateauDeJeuModele.plateauTaille;j++)
+				paintPiece(graphics, (Piece) this.plateauDeJeuModele.getCases()[i][j]);
 		
 			
 	}
