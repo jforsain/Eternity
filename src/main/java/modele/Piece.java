@@ -109,4 +109,14 @@ public class Piece extends Case implements Serializable{
 	public Quartier[] getQuartiers() {
 		return quartiers;
 	}
+	
+	public Piece inverse(Piece a)
+	{
+		this.id = a.id;
+		this.quartiers = a.quartiers;
+		this.orientation = a.orientation;
+		this.plateauDeJeuModele = a.plateauDeJeuModele;
+		
+		return this;
+	}
 }
