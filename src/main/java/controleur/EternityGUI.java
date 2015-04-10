@@ -17,6 +17,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.SwingUtilities;
 
 import vue.ChoisirPiecesVue;
 import vue.PlateauDeJeuVue;
@@ -147,11 +148,19 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
-		System.out.println("Click");
 		// TODO Auto-generated method stub
-		Piece tmp = (Piece) this.plateauDeJeuModele.getCases()[0][0];
-		tmp.tournerDroite();
-		
+		if (SwingUtilities.isRightMouseButton(e) || e.isControlDown())      
+		{
+			Piece tmp = (Piece) this.plateauDeJeuModele.getCases()[0][0];
+			tmp.tournerDroite();
+		}
+		else
+		{
+			// 100 pour taille case
+			int x = e.getX()/100; // n = Un/r - Uo  
+			int y = e.getY()/100; // n = Un/r - Uo  
+
+			System.out.println("case : x " + x + " : " + y );
+		}
 	}
 }
