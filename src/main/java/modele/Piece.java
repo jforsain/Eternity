@@ -29,14 +29,15 @@ public class Piece extends Case implements Serializable{
 		plateauDeJeuModele = a.plateauDeJeuModele;
 		this.id = a.id;
 	}
+	
 	// Cette méthode s'occupe d'initialiser les paramètres des 4 quartiers
 	private void initialiserParametresQuartiers() {
 		
 		// A améliorer avec le fichier .csv
-		quartiers[0] = new Quartier('P', 1, Color.YELLOW, Color.BLUE, Symbole.TRIANGLE);
+		quartiers[0] = new Quartier('P', 1, Color.YELLOW, Color.BLUE, Symbole.CARRE);
 		quartiers[1] = new Quartier('P', 2, Color.BLUE, Color.RED, Symbole.TRIANGLE);
-		quartiers[2] = new Quartier('P', 3, Color.RED, Color.YELLOW, Symbole.TRIANGLE);
-		quartiers[3] = new Quartier('P', 4, Color.PINK, Color.WHITE, Symbole.TRIANGLE);
+		quartiers[2] = new Quartier('P', 3, Color.RED, Color.YELLOW, Symbole.TRAIT);
+		quartiers[3] = new Quartier('P', 4, Color.PINK, Color.WHITE, Symbole.SUN);
 		
 	}
 

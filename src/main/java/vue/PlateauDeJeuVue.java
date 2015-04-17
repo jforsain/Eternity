@@ -116,7 +116,6 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 					paintCouronne(graphics, piece.getPosX() * 100, piece.getPosY() * 100, piece.getPosX() * 100 + 50, piece.getPosY() * 100 + 50, j, piece.getQuartiers()[j].getCouleurForme());
 					break;
 			}
-			
 		}
 	}
 	
@@ -149,12 +148,33 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		graphics.drawPolygon(xT, yT, 3);
 		
 	}
+	
 	// DONE
 	private void paintCouronne(Graphics graphics, int posX, int posY, int xCentre, int yCentre, int indice, Color couleurSymbole)
 	{
+		int tab[];
+		
 		int xT[] = {45, 35, 45, 50, 55, 65, 55};
 		int yT[] = {0, 10, 10, 15, 10, 10, 0};
-		graphics.setColor(Color.WHITE);
+		
+		// 1. On additionne toutes ces coordonées par posX et posY
+		for(int i = 0; i < xT.length; i++)
+		{
+			xT[i] = xT[i] + posX;
+			yT[i] = yT[i] + posY;
+		}
+		// 2. On pivote si nécéssaire la figure par rapport à l'indice
+		if(indice != 0)
+		{
+			for(int i = 0; i < xT.length; i++)
+			{
+				tab = pivot(90 * indice, xT[i], yT[i], xCentre, yCentre);
+				xT[i] = tab[0];
+				yT[i] = tab[1];
+			}
+		}
+		
+		graphics.setColor(couleurSymbole);
 		graphics.fillPolygon(xT, yT, 7);
 		graphics.setColor(Color.BLACK);
 		graphics.drawPolygon(xT, yT, 7);
@@ -217,88 +237,68 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 	// DONE
 	private void paintCarre(Graphics graphics, int posX, int posY, int xCentre, int yCentre, int indice, Color couleurSymbole)
 	{
-		int x1 = 40, x2 = 40, x3 = 60, x4 = 60;
-		int y1 = 0, y2 = 20, y3 = 20, y4 = 0;
-		int x[] = new int[4];
-		int y[] = new int[4];
+
+		int tab[];
 		
-		x[0] = x1;
-		x[1] = x2;
-		x[2] = x3;
-		x[3] = x4;
+		int xT[] = {40, 40, 60, 60};
+		int yT[] = {0, 20, 20, 0};
 		
-		y[0] = y1;
-		y[1] = y2;
-		y[2] = y3;
-		y[3] = y4;
 		
-		graphics.setColor(Color.YELLOW);
-		graphics.fillPolygon(x, y, 4);
+		// 1. On additionne toutes ces coordonées par posX et posY
+		for(int i = 0; i < xT.length; i++)
+		{
+			xT[i] = xT[i] + posX;
+			yT[i] = yT[i] + posY;
+		}
+		// 2. On pivote si nécéssaire la figure par rapport à l'indice
+		if(indice != 0)
+		{
+			for(int i = 0; i < 4; i++)
+			{
+				tab = pivot(90 * indice, xT[i], yT[i], xCentre, yCentre);
+				xT[i] = tab[0];
+				yT[i] = tab[1];
+			}
+		}
+		
+		// 3. On dessine la figure
+		graphics.setColor(couleurSymbole);
+		graphics.fillPolygon(xT, yT, 4);
 		graphics.setColor(Color.BLACK);
-		graphics.drawPolygon(x, y, 4);
+		graphics.drawPolygon(xT, yT, 4);
 	}
 	
 	// DONE
 	private void paintLine(Graphics graphics, int posX, int posY, int xCentre, int yCentre, int indice, Color couleurSymbole)
 	{
-		int x1 = 40, x2 = 40, x5 = 50, x3 = 60, x4 = 60;
-		int y1 = 0, y2 = 40, y5 = 50, y3 = 40, y4 = 0;
-		int x[] = new int[5];
-		int y[] = new int[5];
+		int tab[];
 		
-		x[0] = x1;
-		x[1] = x2;
-		x[2] = x5;
-		x[3] = x3;
-		x[4] = x4;
-		
-		y[0] = y1;
-		y[1] = y2;
-		y[2] = y5;
-		y[3] = y3;
-		y[4] = y4;
-		
-		graphics.setColor(Color.YELLOW);
-		graphics.fillPolygon(x, y, 5);
-		graphics.setColor(Color.BLACK);
-		graphics.drawPolygon(x, y, 5);
+		int xT[] = {40, 40, 50, 60, 60};
+		int yT[] = {0, 40, 50, 40, 0};
 		
 		
-		for(int i = 0; i < 5; i++)
+		// 1. On additionne toutes ces coordonées par posX et posY
+		for(int i = 0; i < xT.length; i++)
 		{
-			System.out.println(y[i]);
+			xT[i] = xT[i] + posX;
+			yT[i] = yT[i] + posY;
+		}
+		// 2. On pivote si nécéssaire la figure par rapport à l'indice
+		if(indice != 0)
+		{
+			for(int i = 0; i < 5; i++)
+			{
+				tab = pivot(90 * indice, xT[i], yT[i], xCentre, yCentre);
+				xT[i] = tab[0];
+				yT[i] = tab[1];
+			}
 		}
 		
-		/* ---- TEST PIVOT ---- */
-		 //GET THE ANGLE IN RADIANS
-        double angle = Math.toRadians(90);
-
-        for(int i = 0; i < 5; i++)
-        {
-        	
-	        //FIRST TRANSLATE THE DIFFERENCE
-	        int xtmp = x[i] - 50;
-	        int ytmp = y[i] - 50;
-	
-	        //APPLY ROTATION
-	        double xT = ((double) xtmp * Math.cos(angle) - ytmp * Math.sin(angle));
-	        double yT = ((double) xtmp * Math.sin(angle) + ytmp * Math.cos(angle));
-	
-	        //TRANSLATE BACK
-	        x[i] = (int)Math.round(xT) + 50;
-	        y[i] = (int)Math.round(yT) + 50;
-	        
-        }
-        
-        graphics.setColor(Color.BLACK);
-		graphics.fillPolygon(x, y, 5);
+		// 3. On dessine la figure
+		graphics.setColor(couleurSymbole);
+		graphics.fillPolygon(xT, yT, 5);
 		graphics.setColor(Color.BLACK);
-		graphics.drawPolygon(x, y, 5);
-        
-		for(int i = 0; i < 5; i++)
-		{
-			System.out.println(y[i]);
-		}
+		graphics.drawPolygon(xT, yT, 5);
 	}
 	
 	// A compléter
@@ -316,9 +316,29 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 	// DONE
 	private void paintSun(Graphics graphics, int posX, int posY, int xCentre, int yCentre, int indice, Color couleurSymbole)
 	{
+		int tab[];
+		
 		int xT[] = {35, 40, 40, 45, 50, 55, 60, 60, 65};
 		int yT[] = {0, 5, 10, 10 , 15, 10, 10, 5, 0};
-		graphics.setColor(Color.WHITE);
+		
+		// 1. On additionne toutes ces coordonées par posX et posY
+		for(int i = 0; i < xT.length; i++)
+		{
+			xT[i] = xT[i] + posX;
+			yT[i] = yT[i] + posY;
+		}
+		// 2. On pivote si nécéssaire la figure par rapport à l'indice
+		if(indice != 0)
+		{
+			for(int i = 0; i < xT.length; i++)
+			{
+				tab = pivot(90 * indice, xT[i], yT[i], xCentre, yCentre);
+				xT[i] = tab[0];
+				yT[i] = tab[1];
+			}
+		}
+		
+		graphics.setColor(couleurSymbole);
 		graphics.fillPolygon(xT, yT, 9);
 		graphics.setColor(Color.BLACK);
 		graphics.drawPolygon(xT, yT, 9);
@@ -327,17 +347,62 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 	// DONE
 	private void paintDoubleWidthLine(Graphics graphics, int posX, int posY, int xCentre, int yCentre, int indice, Color couleurSymbole)
 	{
+		int tab[];
+		
+		/* ---- PART 1 ----- */
 		int xT[] = {35, 50, 65};
 		int yT[] = {35, 50, 35};
-		graphics.setColor(Color.YELLOW);
+		
+		// 1. On additionne toutes ces coordonées par posX et posY
+		for(int i = 0; i < xT.length; i++)
+		{
+			xT[i] = xT[i] + posX;
+			yT[i] = yT[i] + posY;
+		}
+		// 2. On pivote si nécéssaire la figure par rapport à l'indice
+		if(indice != 0)
+		{
+			for(int i = 0; i < 3; i++)
+			{
+				tab = pivot(90 * indice, xT[i], yT[i], xCentre, yCentre);
+				xT[i] = tab[0];
+				yT[i] = tab[1];
+			}
+		}
+		
+		// 3. On dessine la figure
+		graphics.setColor(couleurSymbole);
 		graphics.fillPolygon(xT, yT, 3);
 		graphics.setColor(Color.BLACK);
 		graphics.drawPolygon(xT, yT, 3);
 		
 		
+		
+		/* ---- PART 2 ----- */
+		
 		int xT2[] = {15, 25, 75, 85};
 		int yT2[] = {15, 25, 25, 15};
-		graphics.setColor(Color.YELLOW);
+		
+		
+		// 1. On additionne toutes ces coordonées par posX et posY
+		for(int i = 0; i < xT2.length; i++)
+		{
+			xT2[i] = xT2[i] + posX;
+			yT2[i] = yT2[i] + posY;
+		}
+		// 2. On pivote si nécéssaire la figure par rapport à l'indice
+		if(indice != 0)
+		{
+			for(int i = 0; i < 4; i++)
+			{
+				tab = pivot(90 * indice, xT2[i], yT2[i], xCentre, yCentre);
+				xT2[i] = tab[0];
+				yT2[i] = tab[1];
+			}
+		}
+		
+		
+		graphics.setColor(couleurSymbole);
 		graphics.fillPolygon(xT2, yT2, 4);
 		graphics.setColor(Color.BLACK);
 		graphics.drawPolygon(xT2, yT2, 4);
@@ -346,17 +411,62 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 	// DONE
 	private void paintDoubleHeightLine(Graphics graphics, int posX, int posY, int xCentre, int yCentre, int indice, Color couleurSymbole)
 	{
+		int tab[];
+		
+		
+		/* --- PART 1 ---*/
 		int xT[] = {30, 30, 40 ,40};
 		int yT[] = {0, 30, 40, 0};
+		
+		
+		// 1. On additionne toutes ces coordonées par posX et posY
+		for(int i = 0; i < xT.length; i++)
+		{
+			xT[i] = xT[i] + posX;
+			yT[i] = yT[i] + posY;
+		}
+		// 2. On pivote si nécéssaire la figure par rapport à l'indice
+		if(indice != 0)
+		{
+			for(int i = 0; i < 4; i++)
+			{
+				tab = pivot(90 * indice, xT[i], yT[i], xCentre, yCentre);
+				xT[i] = tab[0];
+				yT[i] = tab[1];
+			}
+		}
+		
+		
+		graphics.setColor(couleurSymbole);
+		graphics.fillPolygon(xT, yT, 4);
+		graphics.setColor(Color.BLACK);
+		graphics.drawPolygon(xT, yT, 4);
+		
+		
+		/* --- PART 2 ---*/
 		
 		int xT2[] = {60, 60, 70, 70};
 		int yT2[] = {0,40, 30, 0};
 		
-		graphics.setColor(Color.YELLOW);
-		graphics.fillPolygon(xT, yT, 4);
-		graphics.setColor(Color.BLACK);
-		graphics.drawPolygon(xT, yT, 4);
-		graphics.setColor(Color.YELLOW);
+		
+		// 1. On additionne toutes ces coordonées par posX et posY
+		for(int i = 0; i < xT2.length; i++)
+		{
+			xT2[i] = xT2[i] + posX;
+			yT2[i] = yT2[i] + posY;
+		}
+		// 2. On pivote si nécéssaire la figure par rapport à l'indice
+		if(indice != 0)
+		{
+			for(int i = 0; i < 4; i++)
+			{
+				tab = pivot(90 * indice, xT2[i], yT2[i], xCentre, yCentre);
+				xT2[i] = tab[0];
+				yT2[i] = tab[1];
+			}
+		}
+		
+		graphics.setColor(couleurSymbole);
 		graphics.fillPolygon(xT2, yT2, 4);
 		graphics.setColor(Color.BLACK);
 		graphics.drawPolygon(xT2, yT2, 4);
@@ -399,6 +509,4 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		this.repaint();
 		
 	}
-	
-	
 }

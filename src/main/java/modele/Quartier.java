@@ -22,6 +22,11 @@ public class Quartier {
 		this.symbole = symbole;
 	}
 	
+	public Quartier()
+	{
+		
+	}
+	
 	public Symbole getSymbole() {
 		return symbole;
 	}
