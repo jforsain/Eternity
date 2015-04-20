@@ -1,50 +1,76 @@
 package modele;
-import java.awt.Color;
-import java.io.Serializable;
 
-import vue.Symbole;
-
-
-public class Piece extends Case implements Serializable{
+public class Piece {
 	
-	private int id;
-	private Quartier quartiers[] = new Quartier[4];
-	private char orientation;
-	private PlateauDeJeuModele plateauDeJeuModele;
+	private int idPiece;
+	private Quartier quartierNord;
+	private Quartier quartierEst;
+	private Quartier quartierSud;
+	private Quartier quartierOuest;
+	private int X;
+	private int Y;
+	private char orientation = 'N';
 	
-	public Piece(int id,int pPosX, int pPosY, char orientation, PlateauDeJeuModele pplateauDeJeuModele) {
-		super(pPosX, pPosY);
-		this.orientation = orientation;
-		initialiserParametresQuartiers();
-		initialiserPositionsQuartiers();
-		plateauDeJeuModele = pplateauDeJeuModele;
-		this.id = id;
+	public Piece(int pIdPiece, Quartier pQuartierNord, Quartier pQuartierEst, Quartier pQuartierSud, Quartier pQuartierOuest) {
+		this.idPiece = pIdPiece;
+		this.quartierNord = pQuartierNord;
+		this.quartierEst = pQuartierEst;
+		this.quartierSud = pQuartierSud;
+		this.quartierOuest = pQuartierOuest;	
 	}
 	
-	public Piece(Piece a) 
-	{
-		super(a.getPosX(), a.getPosY());
-		this.orientation = a.orientation;
-		this.quartiers = a.quartiers;
-		plateauDeJeuModele = a.plateauDeJeuModele;
-		this.id = a.id;
-	}
-	// Cette méthode s'occupe d'initialiser les paramètres des 4 quartiers
-	private void initialiserParametresQuartiers() {
-		
-		// A améliorer avec le fichier .csv
-		quartiers[0] = new Quartier('P', 1, Color.YELLOW, Color.BLUE, Symbole.TRIANGLE);
-		quartiers[1] = new Quartier('P', 2, Color.BLUE, Color.RED, Symbole.TRIANGLE);
-		quartiers[2] = new Quartier('P', 3, Color.RED, Color.YELLOW, Symbole.TRIANGLE);
-		quartiers[3] = new Quartier('P', 4, Color.PINK, Color.WHITE, Symbole.TRIANGLE);
-		
+	/* ----- ACCESSEURS ------ */
+	
+	public int getPosX() {
+		return X;
 	}
 
-	// Cette méthode s'occupe d'initialiser les coordonées des 4 quartiers de la pièce de puzzle en fonction de sa position
-	private void initialiserPositionsQuartiers() {
-		
-		int x1 = getPosX() * 100, xCentre = getPosX() * 100 + 50, x3 = getPosX() * 100 + 100;
-		int y1 = getPosY() * 100, yCentre = getPosY() * 100 + 50, y3 = getPosY() * 100;
+	public void setPosX(int x) {
+		X = x;
+	}
+
+	public int getPosY() {
+		return Y;
+	}
+
+	public void setPosY(int y) {
+		Y = y;
+	}
+
+	public int getIdPiece() {
+		return idPiece;
+	}
+
+	public Quartier getQuartierNord() {
+		return quartierNord;
+	}
+
+	public void setQuartierNord(Quartier quartierNord) {
+		this.quartierNord = quartierNord;
+	}
+
+	public Quartier getQuartierEst() {
+		return quartierEst;
+	}
+
+	public void setQuartierEst(Quartier quartierEst) {
+		this.quartierEst = quartierEst;
+	}
+
+	public Quartier getQuartierSud() {
+		return quartierSud;
+	}
+
+	public void setQuartierSud(Quartier quartierSud) {
+		this.quartierSud = quartierSud;
+	}
+
+	public Quartier getQuartierOuest() {
+		return quartierOuest;
+	}
+
+	public void setQuartierOuest(Quartier quartierOuest) {
+		this.quartierOuest = quartierOuest;
 	}
 
 	public char getOrientation() {
@@ -52,35 +78,6 @@ public class Piece extends Case implements Serializable{
 	}
 
 	public void setOrientation(char orientation) {
-				
 		this.orientation = orientation;
-	}
-	public void tournerDroite() {
-		
-		Quartier tmp =  quartiers[0];//rouge
-		
-		quartiers[0] = quartiers[1]; // rouge
-		quartiers[1] = quartiers[2]; //blanc
-		quartiers[2] = quartiers[3]; //bleu 
-		quartiers[3] = tmp;
-		
-		plateauDeJeuModele.miseAJour();
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public Quartier[] getQuartiers() {
-		return quartiers;
-	}
-	
-	public Piece inverse(Piece a)
-	{
-		this.id = a.id;
-		this.quartiers = a.quartiers;
-		this.orientation = a.orientation;
-		
-		return this;
 	}
 }

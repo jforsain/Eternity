@@ -49,8 +49,6 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	private JMenuItem item8 = new JMenuItem("Aide...");
 	private JMenuItem item9 = new JMenuItem("A propos...");
 	
-	private Piece iscliqued;
-	
 	public EternityGUI(PlateauDeJeuModele pPlateauDeJeuModele, PlateauDeJeuVue pPlateauDeJeuVue)
 	{
 		choisirPiecesVue = new ChoisirPiecesVue();
@@ -83,6 +81,10 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 		this.menu2.add(item9);
 		
 		
+		/* Ajout des listeners */
+		item.addActionListener(this);
+		item7.addActionListener(this);
+		
 		this.setTitle("Eternity");
 	    this.setSize(700, 700);
 	    this.setLocationRelativeTo(null);
@@ -97,8 +99,7 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	    this.setJMenuBar(menuBar);
 	    this.pack();
 	    this.setVisible(true);
-	    
-	    this.iscliqued = null;
+
 	}
 	
 	/* S�lection de la case par le joueur */
@@ -129,6 +130,11 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		if(e.getSource() == item)
+			this.plateauDeJeuModele.nouvellePartie();
+		if(e.getSource() == item7)
+			System.exit(0);
+		
 	}
 
 	
@@ -151,55 +157,5 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
-		// 100 pour taille case
-		int x = e.getX()/100; // n = Un/r - Uo  
-		int y = e.getY()/100; // n = Un/r - Uo  
-		
-		if (SwingUtilities.isRightMouseButton(e) || e.isControlDown())      
-		{
-			Piece tmp = (Piece) this.plateauDeJeuModele.getCases()[x][y];
-			tmp.tournerDroite();
-		}
-		else
-		{
-
-
-			System.out.println("case : x " + x + " : " + y );
-			
-			if(iscliqued == null)
-			{
-				try
-				{
-					this.iscliqued = (Piece) this.plateauDeJeuModele.getCases()[x][y];
-					System.out.println("register");
-				}
-				catch (Exception exeption)
-				{
-					this.iscliqued = null;
-				}
-					
-				
-			}
-			else
-			{
-				
-				try
-				{
-					Piece tmp = (Piece) this.plateauDeJeuModele.getCases()[x][y];
-					if(tmp.getId() != this.iscliqued.getId()){
-						System.out.println("changement");
-						this.plateauDeJeuModele.inverser(this.iscliqued, tmp);
-					}
-					this.iscliqued = null;
-				}
-				catch (Exception exeption)
-				{
-					this.iscliqued = null;
-				}
-
-			}
-				
-		}
 	}
 }

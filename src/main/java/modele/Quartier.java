@@ -1,19 +1,17 @@
 package modele;
 
 import java.awt.Color;
-import java.awt.Polygon;
-
-import vue.Symbole;
 
 public class Quartier {
 	
 	private char type;
 	private int idQuartier;
-	private Color couleurFond;
-	private Color couleurForme;
-	private Symbole symbole;
+	private String couleurFond;
+	private String couleurForme;
+	private String symbole;
 	
-	public Quartier(char type, int idQuartier, Color couleurFond, Color couleurForme, Symbole symbole) {
+	// Constructeur d'une pièce
+	public Quartier(char type, int idQuartier, String couleurFond, String couleurForme, String symbole) {
 		
 		this.type = type;
 		this.idQuartier = idQuartier;
@@ -22,7 +20,16 @@ public class Quartier {
 		this.symbole = symbole;
 	}
 	
-	public Symbole getSymbole() {
+	// Constructeur d'un bord
+	public Quartier(char type, int idQuartier, String couleurFond)
+	{
+		this.type = type;
+		this.idQuartier = idQuartier;
+		couleurForme = "";
+		symbole = "";
+	}
+	
+	public String getSymbole() {
 		return symbole;
 	}
 
@@ -34,11 +41,11 @@ public class Quartier {
 		return idQuartier;
 	}
 	
-	public Color getCouleurFond() {
+	public String getCouleurFond() {
 		return couleurFond;
 	}
 	
-	public Color getCouleurForme() {
+	public String getCouleurForme() {
 		return couleurForme;
 	}
 }
