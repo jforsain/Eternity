@@ -17,9 +17,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.SwingUtilities;
 
 import vue.ChoisirPiecesVue;
 import vue.PlateauDeJeuVue;
+import modele.Piece;
 import modele.PlateauDeJeuModele;
 
 public class EternityGUI extends JFrame implements Serializable, MouseListener, ActionListener, KeyListener {
@@ -52,8 +54,8 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 		choisirPiecesVue = new ChoisirPiecesVue();
 		choisirPiecesVue.setBackground(Color.RED);
 		
-		this.plateauDeJeuModele = new PlateauDeJeuModele();
-		this.plateauDeJeuVue = new PlateauDeJeuVue(plateauDeJeuModele);
+		this.plateauDeJeuModele = pPlateauDeJeuModele;
+		this.plateauDeJeuVue = pPlateauDeJeuVue;
 		
 		jSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, plateauDeJeuVue, choisirPiecesVue);
 		jSplitPane.setEnabled(false);
@@ -79,6 +81,10 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 		this.menu2.add(item9);
 		
 		
+		/* Ajout des listeners */
+		item.addActionListener(this);
+		item7.addActionListener(this);
+		
 		this.setTitle("Eternity");
 	    this.setSize(700, 700);
 	    this.setLocationRelativeTo(null);
@@ -93,14 +99,11 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	    this.setJMenuBar(menuBar);
 	    this.pack();
 	    this.setVisible(true);
+
 	}
 	
 	/* S�lection de la case par le joueur */
-	
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 
-	}
 	
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
@@ -116,7 +119,6 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	
@@ -128,6 +130,11 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		if(e.getSource() == item)
+			this.plateauDeJeuModele.nouvellePartie();
+		if(e.getSource() == item7)
+			System.exit(0);
+		
 	}
 
 	
@@ -146,5 +153,9 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
 	}
 }

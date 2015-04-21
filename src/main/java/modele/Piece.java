@@ -1,79 +1,77 @@
 package modele;
-import java.awt.Color;
-import java.io.Serializable;
 
-
-public class Piece extends Case implements Serializable{
+public class Piece {
 	
-	public static int id;
-	private Quartier quartiers[] = new Quartier[4];
-	private char orientation;
+	private int idPiece;
+	private Quartier quartierNord;
+	private Quartier quartierEst;
+	private Quartier quartierSud;
+	private Quartier quartierOuest;
+	private int X;
+	private int Y;
+	private char orientation = 'N';
 	
-	public Piece(int pPosX, int pPosY, char orientation) {
-		super(pPosX, pPosY);
-		this.orientation = orientation;
-		initialiserParametresQuartiers();
-		initialiserPositionsQuartiers();
+	public Piece(int pIdPiece, Quartier pQuartierNord, Quartier pQuartierEst, Quartier pQuartierSud, Quartier pQuartierOuest) {
+		this.idPiece = pIdPiece;
+		this.quartierNord = pQuartierNord;
+		this.quartierEst = pQuartierEst;
+		this.quartierSud = pQuartierSud;
+		this.quartierOuest = pQuartierOuest;	
 	}
 	
-	// Cette méthode s'occupe d'initialiser les paramètres des 4 quartiers
-	private void initialiserParametresQuartiers() {
-		
-		// A améliorer avec le fichier .csv
-		quartiers[0] = new Quartier('P', 1, Color.RED, Color.YELLOW, Symbole.TRIANGLE);
-		quartiers[1] = new Quartier('P', 2, Color.BLUE, Color.WHITE, Symbole.DOUBLEWIDTHLINE);
-		quartiers[2] = new Quartier('P', 3, Color.YELLOW, Color.BLUE, Symbole.DOUBLEHEIGHTLINE);
-		quartiers[3] = new Quartier('P', 4, Color.GREEN, Color.GRAY, Symbole.KING);
-		
-	}
 
-	// Cette méthode s'occupe d'initialiser les coordonées des 4 quartiers de la pièce de puzzle en fonction de sa position
-	private void initialiserPositionsQuartiers() {
-		
-		int tabCoordonnes[] = new int[2];
-		
-		int x1 = getPosX() * 100, xCentre = getPosX() * 100 + 50, x3 = getPosX() * 100 + 100;
-		int y1 = getPosY() * 100, yCentre = getPosY() * 100 + 50, y3 = getPosY() * 100;
-		
-		
-		// Boucle permettant d'affecter les coordonées x,y à nos 4 quartiers
-		for(int i = 0; i <= 3; i++)
-		{
-			
-			// 1. On ajoute les points dans le Quartier
-			quartiers[i].addPoint(x1, y1);
-			quartiers[i].addPoint(xCentre, yCentre);
-			quartiers[i].addPoint(x3, y3);
-			
-			// 2. On fait appel à notre fonction pivot sur (x1, y1) et (x3, y3) pour les faire pivoter de 90°
-			tabCoordonnes = pivot(90, x1, y1, xCentre, yCentre);
-			x1 = tabCoordonnes[0];
-			y1 = tabCoordonnes[1];
-			
-			tabCoordonnes = pivot(90, x3, y3, xCentre, yCentre);
-			x3 = tabCoordonnes[0];
-			y3 = tabCoordonnes[1];
-		}
-	}
+	/* ----- ACCESSEURS ------ */
 	
-	// Cette méthode permet de pivoter un point par rapport à un centre fournis en arguments
-	private int[] pivot(int angle, int pX, int pY, int pXCentre, int pYCentre)
-	{
-		int tabCoordonnees[] = new int[2];
-		
-		//FIRST TRANSLATE THE DIFFERENCE
-        int xtmp = pX - pXCentre;
-        int ytmp = pY - pYCentre;
+	public int getPosX() {
+		return X;
+	}
 
-        //APPLY ROTATION
-        double xT = ((double) xtmp * Math.cos(Math.toRadians(angle)) - ytmp * Math.sin(Math.toRadians(angle)));
-        double yT = ((double) xtmp * Math.sin(Math.toRadians(angle)) + ytmp * Math.cos(Math.toRadians(angle)));
+	public void setPosX(int x) {
+		X = x;
+	}
 
-        //TRANSLATE BACK
-        tabCoordonnees[0] = (int)Math.round(xT) + pXCentre;
-        tabCoordonnees[1] = (int)Math.round(yT) + pYCentre;
-        
-		return tabCoordonnees;
+	public int getPosY() {
+		return Y;
+	}
+
+	public void setPosY(int y) {
+		Y = y;
+	}
+
+	public int getIdPiece() {
+		return idPiece;
+	}
+
+	public Quartier getQuartierNord() {
+		return quartierNord;
+	}
+
+	public void setQuartierNord(Quartier quartierNord) {
+		this.quartierNord = quartierNord;
+	}
+
+	public Quartier getQuartierEst() {
+		return quartierEst;
+	}
+
+	public void setQuartierEst(Quartier quartierEst) {
+		this.quartierEst = quartierEst;
+	}
+
+	public Quartier getQuartierSud() {
+		return quartierSud;
+	}
+
+	public void setQuartierSud(Quartier quartierSud) {
+		this.quartierSud = quartierSud;
+	}
+
+	public Quartier getQuartierOuest() {
+		return quartierOuest;
+	}
+
+	public void setQuartierOuest(Quartier quartierOuest) {
+		this.quartierOuest = quartierOuest;
 	}
 
 	public char getOrientation() {
@@ -82,13 +80,5 @@ public class Piece extends Case implements Serializable{
 
 	public void setOrientation(char orientation) {
 		this.orientation = orientation;
-	}
-
-	public static int getId() {
-		return id;
-	}
-
-	public Quartier[] getQuartiers() {
-		return quartiers;
 	}
 }
