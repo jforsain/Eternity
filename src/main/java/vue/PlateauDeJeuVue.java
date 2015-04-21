@@ -85,13 +85,6 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 			graphics.drawPolygon(piece.getQuartiers()[i]);
 		}
 		
-		// Test des symboles
-//		paintDoubleHeightLine(graphics);
-//		paintDoubleWidthLine(graphics);
-//		paintSun(graphics);
-//		paintCouronne(graphics);
-		paintZigZag(graphics);
-		
 		//2. On dessine les symboles
 		
 	}

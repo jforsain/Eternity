@@ -20,10 +20,10 @@ public class Piece extends Case implements Serializable{
 	private void initialiserParametresQuartiers() {
 		
 		// A améliorer avec le fichier .csv
-		quartiers[0] = new Quartier('P', 1, Color.RED, Color.BLUE, Symbole.TRIANGLE);
-		quartiers[1] = new Quartier('P', 1, Color.BLUE, Color.BLUE, Symbole.TRIANGLE);
-		quartiers[2] = new Quartier('P', 1, Color.YELLOW, Color.BLUE, Symbole.TRIANGLE);
-		quartiers[3] = new Quartier('P', 1, Color.GREEN, Color.BLUE, Symbole.TRIANGLE);
+		quartiers[0] = new Quartier('P', 1, Color.RED, Color.YELLOW, Symbole.TRIANGLE);
+		quartiers[1] = new Quartier('P', 2, Color.BLUE, Color.WHITE, Symbole.DOUBLEWIDTHLINE);
+		quartiers[2] = new Quartier('P', 3, Color.YELLOW, Color.BLUE, Symbole.DOUBLEHEIGHTLINE);
+		quartiers[3] = new Quartier('P', 4, Color.GREEN, Color.GRAY, Symbole.KING);
 		
 	}
 

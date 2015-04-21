@@ -5,5 +5,9 @@ public enum Symbole {
 	TRIANGLE,
 	CARRE,
 	TRAIT,
-	ROND;
+	DOUBLEHEIGHTLINE,
+	DOUBLEWIDTHLINE,
+	KING,
+	SUN;
+	//ZIGZAG
 }
