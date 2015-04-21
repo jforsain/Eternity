@@ -19,7 +19,6 @@ public class Piece {
 		this.quartierOuest = pQuartierOuest;	
 	}
 	
-
 	/* ----- ACCESSEURS ------ */
 	
 	public int getPosX() {
