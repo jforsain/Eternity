@@ -19,6 +19,17 @@ public class Piece {
 		this.quartierOuest = pQuartierOuest;	
 	}
 	
+	public Piece(Piece a) {
+		this.X = a.getPosX();
+		this.Y = a.getPosY();
+		this.orientation = a.orientation;
+		this.quartierNord = a.getQuartierNord();
+		this.quartierSud = a.getQuartierSud();
+		this.quartierEst = a.getQuartierEst();
+		this.quartierOuest = a.getQuartierOuest();
+		this.idPiece = a.idPiece;
+	}
+	
 	/* ----- ACCESSEURS ------ */
 	
 	public int getPosX() {
@@ -79,5 +90,22 @@ public class Piece {
 
 	public void setOrientation(char orientation) {
 		this.orientation = orientation;
+	}
+	
+	public void tourner() {
+			
+			Quartier tmp =  quartierNord;
+			
+			quartierNord = quartierOuest;
+			quartierOuest = quartierSud;
+			quartierSud = quartierEst;
+			quartierEst = tmp;
+	}
+	
+	public Piece inverse(Piece a)
+	{
+		this.X =  a.getPosX();
+		this.Y = a.getPosY();
+		return this;
 	}
 }

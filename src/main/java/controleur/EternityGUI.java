@@ -49,6 +49,8 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	private JMenuItem item8 = new JMenuItem("Aide...");
 	private JMenuItem item9 = new JMenuItem("A propos...");
 	
+	private Piece iscliqued;
+	
 	public EternityGUI(PlateauDeJeuModele pPlateauDeJeuModele, PlateauDeJeuVue pPlateauDeJeuVue)
 	{
 		choisirPiecesVue = new ChoisirPiecesVue();
@@ -156,6 +158,57 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
+		// 100 pour taille case
+				int horizontal = e.getX()/100; // n = Un/r - Uo  
+				int vertical = e.getY()/100; // n = Un/r - Uo  
+				
+				if (SwingUtilities.isRightMouseButton(e) || e.isControlDown())      
+				{
+					Piece tmp = (Piece) this.plateauDeJeuModele.getCases()[vertical][horizontal];
+					tmp.tourner();
+					this.plateauDeJeuModele.miseAJour();
+				}
+				else
+				{
+
+
+					System.out.println("case : H " + horizontal + " ; V :" + vertical );
+					
+					if(iscliqued == null)
+					{
+						try
+						{
+							this.iscliqued = (Piece) this.plateauDeJeuModele.getCases()[vertical][horizontal];
+							System.out.println("register");
+						}
+						catch (Exception exeption)
+						{
+							System.out.println("erreur register");
+							this.iscliqued = null;
+						}
+							
+						
+					}
+					else
+					{
+						
+						try
+						{
+							Piece tmp = (Piece) this.plateauDeJeuModele.getCases()[vertical][horizontal];
+							if(tmp.getIdPiece() != this.iscliqued.getIdPiece()){
+								System.out.println("changement");
+								this.plateauDeJeuModele.inverser(this.iscliqued, tmp);
+							}
+							this.iscliqued = null;
+						}
+						catch (Exception exeption)
+						{
+							System.out.println("erreur changement");
+							this.iscliqued = null;
+						}
+
+					}
+						
+				}
 	}
 }

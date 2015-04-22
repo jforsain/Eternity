@@ -34,7 +34,7 @@ public class PlateauDeJeuModele extends Observable {
 		
 	}
 	
-	private void miseAJour()
+	public void miseAJour()
 	{
 		setChanged();
 		notifyObservers();
@@ -109,5 +109,15 @@ public class PlateauDeJeuModele extends Observable {
 		Random random = new Random();
 		int nbreAleatoire = 1 + random.nextInt(quartiers.size() - 1);
 		return quartiers.get(nbreAleatoire);
+	}
+
+	public void inverser(Piece a, Piece b) {
+		
+		Piece tmpA = new Piece(a);
+		Piece tmpB = new Piece(b);
+		pieces[a.getPosY()][a.getPosX()] = tmpB.inverse(a);
+		pieces[b.getPosY()][b.getPosX()] = tmpA.inverse(b);
+		this.miseAJour();
+		
 	}
 }
