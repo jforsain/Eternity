@@ -1,8 +1,8 @@
-import javax.swing.JFrame;
-
+import vue.ChoisirPiecesVue;
 import vue.PlateauDeJeuVue;
 import modele.PlateauDeJeuModele;
 import controleur.EternityGUI;
+import controleur.Informations;
 
 public class Main {
 
@@ -11,9 +11,12 @@ public class Main {
 		
 		PlateauDeJeuModele plateauDeJeuModele = new PlateauDeJeuModele();
 		PlateauDeJeuVue plateauDeJeuVue = new PlateauDeJeuVue(plateauDeJeuModele);
-		EternityGUI eternityGUI = new EternityGUI(plateauDeJeuModele, plateauDeJeuVue);
+		ChoisirPiecesVue choisirPiecesVue = new ChoisirPiecesVue(plateauDeJeuModele);
+		Informations informations = new Informations();
+		EternityGUI eternityGUI = new EternityGUI(plateauDeJeuModele, plateauDeJeuVue, choisirPiecesVue, informations);
 		
 		plateauDeJeuVue.addMouseListener(eternityGUI);
+		choisirPiecesVue.addMouseListener(eternityGUI);
 
 	}
 
