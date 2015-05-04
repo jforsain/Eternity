@@ -1,7 +1,5 @@
 package controleur;
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -10,19 +8,17 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.Serializable;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.JSplitPane;
-import javax.swing.SwingUtilities;
 
 import vue.ChoisirPiecesVue;
 import vue.PlateauDeJeuVue;
 import modele.Piece;
 import modele.PlateauDeJeuModele;
+import modele.SoundClip;
 
 public class EternityGUI extends JFrame implements Serializable, MouseListener, ActionListener, KeyListener {
 	
@@ -31,6 +27,7 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	private ChoisirPiecesVue choisirPiecesVue;
 	private Informations info;
 	private PlateauDeJeuModele plateauDeJeuModele;
+	private SoundClip soundClip;
 	
 	private JSplitPane jSplitPane;
 	private JSplitPane jSplitPane2;
@@ -59,6 +56,8 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 		this.plateauDeJeuModele = pPlateauDeJeuModele;
 		this.plateauDeJeuVue = pPlateauDeJeuVue;
 		this.info = pInfos;
+		this.soundClip = new SoundClip();
+		
 		
 		jSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, plateauDeJeuVue, choisirPiecesVue);
 		jSplitPane.setEnabled(false);
@@ -137,9 +136,12 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 		// TODO Auto-generated method stub
 		if(e.getSource() == item)
 		{
+			this.soundClip.getClip().start();
+			this.plateauDeJeuModele.setPartieEnCours(true);
 			this.plateauDeJeuModele.nouvellePartie();
 			this.plateauDeJeuModele.randomShuffleArray();
 			this.plateauDeJeuModele.initialiserTerrain();
+			this.info.getTimerLabel().timerStart();
 		}
 		if(e.getSource() == item7)
 			System.exit(0);

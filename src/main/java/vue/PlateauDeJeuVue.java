@@ -46,7 +46,7 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 	public void paint(Graphics graphics)
 	{
 		super.paint(graphics);
-		if(this.plateauDeJeuModele.getPlateau() != null) /* Si le jeu n'a pas encore démarré */
+		if(this.plateauDeJeuModele.getCasesShuffle() != null) /* Si le jeu n'a pas encore démarré */
 		{	
 			/* ---- TEST des positions ---- */
 			for(int i = 0; i < this.plateauDeJeuModele.getPlateau().length; i++)
