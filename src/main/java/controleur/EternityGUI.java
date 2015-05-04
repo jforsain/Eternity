@@ -8,13 +8,16 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.Serializable;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
 
 import vue.ChoisirPiecesVue;
+import vue.Pause;
 import vue.PlateauDeJeuVue;
 import modele.Piece;
 import modele.PlateauDeJeuModele;
@@ -28,6 +31,8 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	private Informations info;
 	private PlateauDeJeuModele plateauDeJeuModele;
 	private SoundClip soundClip;
+	private Pause panelPause;
+	private Pause panelPause2;
 	
 	private JSplitPane jSplitPane;
 	private JSplitPane jSplitPane2;
@@ -48,23 +53,28 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	private JMenuItem item8 = new JMenuItem("Aide...");
 	private JMenuItem item9 = new JMenuItem("A propos...");
 	
+	private JButton clearAll = new JButton("Clear");
+	private JButton solution = new JButton("Solution");
+	
 	private Piece iscliqued;
 	
-	public EternityGUI(PlateauDeJeuModele pPlateauDeJeuModele, PlateauDeJeuVue pPlateauDeJeuVue, ChoisirPiecesVue pChoisirPiecesVue, Informations pInfos)
+	public EternityGUI(PlateauDeJeuModele pPlateauDeJeuModele, PlateauDeJeuVue pPlateauDeJeuVue, ChoisirPiecesVue pChoisirPiecesVue)
 	{
 		this.choisirPiecesVue = pChoisirPiecesVue;
 		this.plateauDeJeuModele = pPlateauDeJeuModele;
 		this.plateauDeJeuVue = pPlateauDeJeuVue;
-		this.info = pInfos;
+		this.info = new Informations(clearAll, solution);
 		this.soundClip = new SoundClip();
-		
+		this.panelPause = new Pause();
+		this.panelPause2 = new Pause();
 		
 		jSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, plateauDeJeuVue, choisirPiecesVue);
 		jSplitPane.setEnabled(false);
 		jSplitPane2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, jSplitPane, info);
 		jSplitPane2.setEnabled(false);
 		initialisationFenetre();
-		itemGrise(this.plateauDeJeuModele.getPartieEnCours());
+		item2.setEnabled(false);
+		item3.setEnabled(false);
 	}
 	
 	public void initialisationFenetre()
@@ -91,7 +101,9 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 		item7.addActionListener(this);
 		item3.addActionListener(this);
 		item2.addActionListener(this);
-		jSplitPane2.addKeyListener(this);
+		this.info.getSolution().addActionListener(this);
+		this.info.getClearAll().addActionListener(this);
+		
 		
 		this.setTitle("Eternity");
 	    this.setSize(700, 700);
@@ -99,6 +111,8 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
 	    this.getContentPane().add(this.jSplitPane2, BorderLayout.CENTER);
+	    this.setFocusable(true);
+	    this.addKeyListener(this);
 	    
 	    this.setResizable(false);
 	    this.menuBar.add(menu);
@@ -109,102 +123,155 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	    this.setVisible(true);
 	}
 	
-	public void itemGrise(boolean partieEnCours)
+	
+	
+	private void majGUI()
 	{
-		if(!this.plateauDeJeuModele.getPartieEnCours())
+		if(this.plateauDeJeuModele.getPartieEnPause())
 		{
-			item2.setEnabled(false);
-			item3.setEnabled(false);
+			jSplitPane.setRightComponent(this.panelPause);
+			jSplitPane.setLeftComponent(this.panelPause2);
 		}
 		else
 		{
-			item2.setEnabled(true);
-			item3.setEnabled(true);
+			jSplitPane.setRightComponent(this.choisirPiecesVue);
+			jSplitPane.setLeftComponent(this.plateauDeJeuVue);
 		}
+		jSplitPane.validate();
 	}
 	
 	/* S�lection de la case par le joueur */
 
 	
 	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	
 	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	
 	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 	}
 
 	
 	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		if(e.getSource() == item) // Nouvelle partie  
 		{
-			this.plateauDeJeuModele.setPartieEnCours(true);
-			this.itemGrise(this.plateauDeJeuModele.getPartieEnCours());
-			this.soundClip.getClip().start();
-			this.plateauDeJeuModele.setPartieEnCours(true);
-			this.plateauDeJeuModele.nouvellePartie();
-			this.plateauDeJeuModele.randomShuffleArray();
-			this.plateauDeJeuModele.initialiserTerrain();
-			this.info.getTimerLabel().timerStart();
+			if(this.plateauDeJeuModele.getPartieEnCours()) // Si la partie est déjà en cours
+			{
+				this.info.getTimerLabel().timerStop();
+				this.soundClip.getClip().stop();
+				int val = JOptionPane.showConfirmDialog(null, "Une partie est en cours. Êtes-vous sûr ?", "New Game", JOptionPane.YES_NO_OPTION);
+				switch(val)
+				{
+					case JOptionPane.YES_OPTION:
+						this.plateauDeJeuModele.nouvellePartie();
+						this.plateauDeJeuModele.randomShuffleArray();
+						this.plateauDeJeuModele.initialiserTerrain();
+						this.info.getTimerLabel().timerReset();
+						this.info.getTimerLabel().timerStart();
+						break;
+					case JOptionPane.NO_OPTION:
+					case JOptionPane.CANCEL_OPTION:
+						if(!this.plateauDeJeuModele.getPartieEnPause())
+						{
+							this.info.getTimerLabel().timerStart();
+							this.soundClip.getClip().start();
+						}
+						break;
+				}
+			}
+			else
+			{
+				this.plateauDeJeuModele.setPartieEnCours(true);
+				this.soundClip.getClip().start();
+				this.plateauDeJeuModele.setPartieEnCours(true);
+				this.plateauDeJeuModele.nouvellePartie();
+				this.plateauDeJeuModele.randomShuffleArray();
+				this.plateauDeJeuModele.initialiserTerrain();
+				this.info.getTimerLabel().timerStart();
+				this.item3.setEnabled(true);
+			}
 		}
 		if(e.getSource() == item7) // Fermer
-			System.exit(0);
+		{
+			if(this.plateauDeJeuModele.getPartieEnCours())
+			{
+				this.info.getTimerLabel().timerStop();
+				this.soundClip.getClip().stop();
+				int val = JOptionPane.showConfirmDialog(null, "Une partie est en cours. Voulez-vous vraiment quitter ?", "Quit", JOptionPane.YES_NO_OPTION);
+				switch(val)
+				{
+					case JOptionPane.YES_OPTION:
+						System.exit(0);
+						break;
+					case JOptionPane.NO_OPTION:
+					case JOptionPane.CANCEL_OPTION:
+						if(!this.plateauDeJeuModele.getPartieEnPause())
+						{
+							this.info.getTimerLabel().timerStart();
+							this.soundClip.getClip().start();
+						}
+						break;
+				}
+			}
+			else
+			{
+				System.exit(0);
+			}
+		}
 		if(e.getSource() == item3) // Pause 
 		{
 			this.soundClip.getClip().stop();
 			this.info.getTimerLabel().timerStop();
+			item2.setEnabled(true);
 			item3.setEnabled(false);
+			this.plateauDeJeuModele.setPartieEnPause(true);
+			majGUI();
 		}
 		if(e.getSource() == item2) // Continuer
 		{
 			this.soundClip.getClip().start();
 			this.info.getTimerLabel().timerStart();
 			item3.setEnabled(true);
+			item2.setEnabled(false);
+			this.plateauDeJeuModele.setPartieEnPause(false);
+			majGUI();
 		}
+		if(e.getSource() == this.info.getSolution())
+		{
+			System.out.println("OK");
+		}
+		
 	}
 
-	
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE)
+		if(e.getKeyCode() == 115 && this.plateauDeJeuModele.getPartieEnPause()) // Touche F4
 		{
-			System.out.println("BACKSPACE");
+			this.soundClip.getClip().start();
+			this.info.getTimerLabel().timerStart();
+			item3.setEnabled(true);
+			this.plateauDeJeuModele.setPartieEnPause(false);
+			majGUI();
 		}
 	}
 
 	
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		int key = e.getKeyCode();
-		System.out.println("ok");
-		if(key == 17 && !item3.isEnabled())
-		{
-			this.soundClip.getClip().start();
-			this.info.getTimerLabel().timerStart();
-			item3.setEnabled(true);
-		}
-			
+		
 	}
 
 	public void mouseClicked(MouseEvent e) {

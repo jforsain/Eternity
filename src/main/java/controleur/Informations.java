@@ -12,24 +12,27 @@ import javax.swing.JPanel;
 
 public class Informations extends JPanel implements ActionListener{
 	
-	private JButton help = new JButton("Help");
-	private JButton clearAll = new JButton("Clear");
-	private JButton solution = new JButton("Solution");
+	private JButton clearAll;
+	private JButton solution;
 	private TimerLabel timerLabel = new TimerLabel();
 	
-	private JPanel panel = new JPanel();
+	private JPanel panel = new JPanel(); // contient les boutons
 	
-	public Informations()
+	public Informations(JButton pClearAll, JButton pSolution)
 	{
-		solution.setForeground(Color.RED);
+		this.clearAll = pClearAll;
+		this.solution = pSolution;
+		this.solution.setForeground(Color.RED);
 		this.setLayout(new BorderLayout());
 		panel.setPreferredSize(new Dimension(400, 100));
-		panel.setLayout(new GridLayout(3, 1));
-		panel.add(help);
-		panel.add(clearAll);
-		panel.add(solution);
+		panel.setLayout(new GridLayout(2, 1));
+		panel.add(this.clearAll);
+		panel.add(this.solution);
 		this.add(BorderLayout.WEST, panel);
 		this.add(timerLabel);
+		
+		clearAll.addActionListener(this);
+		solution.addActionListener(this);
 	}
 	
 	public TimerLabel getTimerLabel() {
@@ -53,6 +56,17 @@ public class Informations extends JPanel implements ActionListener{
 
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+		if(e.getSource() == this.clearAll)
+		{
+			
+		}
+	}
+
+	public JButton getClearAll() {
+		return clearAll;
+	}
+
+	public JButton getSolution() {
+		return solution;
 	}
 }

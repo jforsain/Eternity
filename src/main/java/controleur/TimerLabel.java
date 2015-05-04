@@ -149,9 +149,9 @@ public class TimerLabel extends JLabel implements ActionListener {
      */
     
     public void updateText() {
-		setText("TIMER: " + nums[ hrs ]+ ":" + 
-			 nums[ mins ] + ":" +
-			 nums[ secs ] + "." + 
+		setText("TIMER: " + nums[hrs]+ ":" + 
+			 nums[mins] + ":" +
+			 nums[secs] + "." + 
 			 nums[hsecs] );
     }
 } // TimerLabel

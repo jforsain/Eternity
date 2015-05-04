@@ -12,11 +12,9 @@ public class Main {
 		PlateauDeJeuModele plateauDeJeuModele = new PlateauDeJeuModele();
 		PlateauDeJeuVue plateauDeJeuVue = new PlateauDeJeuVue(plateauDeJeuModele);
 		ChoisirPiecesVue choisirPiecesVue = new ChoisirPiecesVue(plateauDeJeuModele);
-		Informations informations = new Informations();
-		EternityGUI eternityGUI = new EternityGUI(plateauDeJeuModele, plateauDeJeuVue, choisirPiecesVue, informations);
+		EternityGUI eternityGUI = new EternityGUI(plateauDeJeuModele, plateauDeJeuVue, choisirPiecesVue);
 		
 		plateauDeJeuVue.addMouseListener(eternityGUI);
 		choisirPiecesVue.addMouseListener(eternityGUI);
-
 	}
 }

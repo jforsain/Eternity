@@ -13,21 +13,14 @@ public class PlateauDeJeuModele extends Observable {
 	private Case casesShuffle[][];  // Réserve
 	private Case plateau[][]; // Plateau 
 	private boolean partieEnCours = false;
+	private boolean partieEnPause = false;
 	private final int taillePlateau = 4;
+	private boolean aUtiliseAide = false;
 	
-	public boolean getPartieEnCours() {
-		return partieEnCours;
-	}
-
-	public void setPartieEnCours(boolean partieEnCours) {
-		this.partieEnCours = partieEnCours;
-	}
-
 	public void save()
 	{
 		
 	}
-	
 	
 	public void miseAJour()
 	{
@@ -39,8 +32,7 @@ public class PlateauDeJeuModele extends Observable {
 	public void nouvellePartie()
 	{
 		int idPiece = 0;
-		cases = new Case[4][4];
-		
+		cases = new Case[4][4];	
 		
 		/*----- 1. On récupère la liste des quartier ----- */
 		QuartierDao quartierDao = new QuartierDao();
@@ -131,19 +123,6 @@ public class PlateauDeJeuModele extends Observable {
 		}
 	}
 	
-	
-	public Case[][] getCasesShuffle() {
-		return casesShuffle;
-	}
-
-	public Case[][] getCases() {
-		return cases;
-	}
-	
-	public Case[][] getPlateau() {
-		return plateau;
-	}
-	
 	private Quartier getRandomQuartier(QuartierDao quartierDao)
 	{
 		List<Quartier> quartiers = quartierDao.findQuartiers();
@@ -168,7 +147,7 @@ public class PlateauDeJeuModele extends Observable {
 		boolean endGame = true;
 		for(int i = 0; i < casesShuffle.length; i++) {
 			for (int j = 0; j < casesShuffle[i].length; j++) {
-				if(!((Piece) casesShuffle[i][j]).equals((Piece) cases[i][j]))
+				if(!((Piece) plateau[i][j]).equals((Piece) cases[i][j]))
 				{
 					endGame = false;
 					break;
@@ -177,7 +156,36 @@ public class PlateauDeJeuModele extends Observable {
 			if(!endGame)
 				break;
 		}
-		
 		return endGame;
+	}
+	
+	
+	/* ----- ACCESSEURS -----  */
+	public boolean getPartieEnCours() {
+		return partieEnCours;
+	}
+
+	public boolean getPartieEnPause() {
+		return partieEnPause;
+	}
+
+	public void setPartieEnPause(boolean partieEnPause) {
+		this.partieEnPause = partieEnPause;
+	}
+
+	public void setPartieEnCours(boolean partieEnCours) {
+		this.partieEnCours = partieEnCours;
+	}
+	
+	public Case[][] getCasesShuffle() {
+		return casesShuffle;
+	}
+
+	public Case[][] getCases() {
+		return cases;
+	}
+	
+	public Case[][] getPlateau() {
+		return plateau;
 	}
 }
