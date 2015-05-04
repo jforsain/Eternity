@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.Serializable;
 
+import javax.sound.sampled.Clip;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -17,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
 
 import vue.ChoisirPiecesVue;
+import vue.Gameover;
 import vue.Pause;
 import vue.PlateauDeJeuVue;
 import modele.Piece;
@@ -33,6 +35,7 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	private SoundClip soundClip;
 	private Pause panelPause;
 	private Pause panelPause2;
+	private Gameover gameover;
 	
 	private JSplitPane jSplitPane;
 	private JSplitPane jSplitPane2;
@@ -44,7 +47,8 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	
 	private JMenuItem item = new JMenuItem("Nouveau");
 	private JMenuItem item2 = new JMenuItem("Continuer          F4");
-	private JMenuItem item3 = new JMenuItem("Pause");
+	private JMenuItem item3 = new JMenuItem("Pause              Esc");
+	private JMenuItem item10 = new JMenuItem("Arrêter");
 	private JMenuItem item4 = new JMenuItem("Charger...          F3");
 	private JMenuItem item5 = new JMenuItem("Sauvegarder...   F2");
 	private JMenuItem item6 = new JMenuItem("Options...");
@@ -67,6 +71,7 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 		this.soundClip = new SoundClip();
 		this.panelPause = new Pause();
 		this.panelPause2 = new Pause();
+		this.gameover = new Gameover();
 		
 		jSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, plateauDeJeuVue, choisirPiecesVue);
 		jSplitPane.setEnabled(false);
@@ -83,6 +88,7 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 		this.menu.add(item);
 		this.menu.add(item2);
 		this.menu.add(item3);
+		this.menu.add(item10);
 		this.menu.addSeparator();
 		this.menu.add(item4);
 		this.menu.add(item5);
@@ -178,9 +184,11 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 						this.plateauDeJeuModele.initialiserTerrain();
 						this.info.getTimerLabel().timerReset();
 						this.info.getTimerLabel().timerStart();
+						this.soundClip.getClip().setFramePosition(0);
+						this.soundClip.getClip().loop(Clip.LOOP_CONTINUOUSLY);
 						break;
 					case JOptionPane.NO_OPTION:
-					case JOptionPane.CANCEL_OPTION:
+					case JOptionPane.CLOSED_OPTION:
 						if(!this.plateauDeJeuModele.getPartieEnPause())
 						{
 							this.info.getTimerLabel().timerStart();
@@ -191,9 +199,15 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 			}
 			else
 			{
+				if(plateauDeJeuModele.getGiveup())
+				{
+					jSplitPane.setRightComponent(this.choisirPiecesVue);
+					jSplitPane.validate();
+				}
 				this.plateauDeJeuModele.setPartieEnCours(true);
-				this.soundClip.getClip().start();
-				this.plateauDeJeuModele.setPartieEnCours(true);
+				this.plateauDeJeuModele.setGiveup(false);
+				this.soundClip.getClip().setFramePosition(0);
+				this.soundClip.getClip().loop(Clip.LOOP_CONTINUOUSLY);
 				this.plateauDeJeuModele.nouvellePartie();
 				this.plateauDeJeuModele.randomShuffleArray();
 				this.plateauDeJeuModele.initialiserTerrain();
@@ -214,11 +228,11 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 						System.exit(0);
 						break;
 					case JOptionPane.NO_OPTION:
-					case JOptionPane.CANCEL_OPTION:
+					case JOptionPane.CLOSED_OPTION:
 						if(!this.plateauDeJeuModele.getPartieEnPause())
 						{
 							this.info.getTimerLabel().timerStart();
-							this.soundClip.getClip().start();
+							this.soundClip.getClip().loop(Clip.LOOP_CONTINUOUSLY);
 						}
 						break;
 				}
@@ -239,7 +253,7 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 		}
 		if(e.getSource() == item2) // Continuer
 		{
-			this.soundClip.getClip().start();
+			this.soundClip.getClip().loop(Clip.LOOP_CONTINUOUSLY);
 			this.info.getTimerLabel().timerStart();
 			item3.setEnabled(true);
 			item2.setEnabled(false);
@@ -248,20 +262,51 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 		}
 		if(e.getSource() == this.info.getSolution())
 		{
-			System.out.println("OK");
+			this.soundClip.getClip().stop();
+			this.info.getTimerLabel().timerStop();
+			int val = JOptionPane.showConfirmDialog(null, "Souhaitez-vous vraiment abandonner ?", "Solution", JOptionPane.YES_NO_OPTION);
+			switch(val)
+			{
+				case JOptionPane.YES_OPTION:
+					this.plateauDeJeuModele.setGiveup(true);
+					this.plateauDeJeuModele.setPlateau(this.plateauDeJeuModele.getCases());
+					this.jSplitPane.setRightComponent(this.gameover);
+					if(this.plateauDeJeuModele.getPartieEnPause() && this.plateauDeJeuModele.getGiveup())
+						this.jSplitPane.setLeftComponent(plateauDeJeuVue);
+					this.jSplitPane.validate();
+					this.plateauDeJeuModele.setPartieEnCours(false);
+					this.info.getTimerLabel().timerReset();
+					break;
+				case JOptionPane.NO_OPTION:
+				case JOptionPane.CLOSED_OPTION:
+					this.soundClip.getClip().loop(Clip.LOOP_CONTINUOUSLY);
+					this.info.getTimerLabel().timerStart();
+					break;
+			}
 		}
-		
 	}
 
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() == 115 && this.plateauDeJeuModele.getPartieEnPause()) // Touche F4
 		{
-			this.soundClip.getClip().start();
+			this.soundClip.getClip().loop(Clip.LOOP_CONTINUOUSLY);
 			this.info.getTimerLabel().timerStart();
 			item3.setEnabled(true);
+			item2.setEnabled(false);
 			this.plateauDeJeuModele.setPartieEnPause(false);
 			majGUI();
 		}
+		
+		if(e.getKeyCode() == 27 && !this.plateauDeJeuModele.getPartieEnPause()) // Touche Esc
+		{
+			this.soundClip.getClip().stop();
+			this.info.getTimerLabel().timerStop();
+			item2.setEnabled(true);
+			item3.setEnabled(false);
+			this.plateauDeJeuModele.setPartieEnPause(true);
+			majGUI();
+		}
+		
 	}
 
 	
