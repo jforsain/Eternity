@@ -16,6 +16,7 @@ public class PlateauDeJeuModele extends Observable {
 	private boolean partieEnPause = false;
 	private final int taillePlateau = 4;
 	private boolean aUtiliseAide = false;
+	private boolean giveup = false;
 	
 	public void save()
 	{
@@ -187,5 +188,33 @@ public class PlateauDeJeuModele extends Observable {
 	
 	public Case[][] getPlateau() {
 		return plateau;
+	}
+
+	public void setCases(Case[][] cases) {
+		this.cases = cases;
+	}
+
+	public void setCasesShuffle(Case[][] casesShuffle) {
+		this.casesShuffle = casesShuffle;
+	}
+
+	public void setPlateau(Case[][] plateau) {
+		this.plateau = plateau;
+	}
+	
+	public boolean getAUtiliseAide() {
+		return aUtiliseAide;
+	}
+
+	public void setAUtiliseAide(boolean aUtiliseAide) {
+		this.aUtiliseAide = aUtiliseAide;
+	}
+
+	public boolean getGiveup() {
+		return giveup;
+	}
+
+	public void setGiveup(boolean giveup) {
+		this.giveup = giveup;
 	}
 }
