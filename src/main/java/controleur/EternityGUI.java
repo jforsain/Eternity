@@ -64,6 +64,7 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 		jSplitPane2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, jSplitPane, info);
 		jSplitPane2.setEnabled(false);
 		initialisationFenetre();
+		itemGrise(this.plateauDeJeuModele.getPartieEnCours());
 	}
 	
 	public void initialisationFenetre()
@@ -88,6 +89,9 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 		/* Ajout des listeners */
 		item.addActionListener(this);
 		item7.addActionListener(this);
+		item3.addActionListener(this);
+		item2.addActionListener(this);
+		jSplitPane2.addKeyListener(this);
 		
 		this.setTitle("Eternity");
 	    this.setSize(700, 700);
@@ -103,7 +107,20 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	    this.pack();
 	    this.setLocationRelativeTo(null);
 	    this.setVisible(true);
-
+	}
+	
+	public void itemGrise(boolean partieEnCours)
+	{
+		if(!this.plateauDeJeuModele.getPartieEnCours())
+		{
+			item2.setEnabled(false);
+			item3.setEnabled(false);
+		}
+		else
+		{
+			item2.setEnabled(true);
+			item3.setEnabled(true);
+		}
 	}
 	
 	/* S�lection de la case par le joueur */
@@ -134,8 +151,10 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getSource() == item)
+		if(e.getSource() == item) // Nouvelle partie  
 		{
+			this.plateauDeJeuModele.setPartieEnCours(true);
+			this.itemGrise(this.plateauDeJeuModele.getPartieEnCours());
 			this.soundClip.getClip().start();
 			this.plateauDeJeuModele.setPartieEnCours(true);
 			this.plateauDeJeuModele.nouvellePartie();
@@ -143,14 +162,29 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 			this.plateauDeJeuModele.initialiserTerrain();
 			this.info.getTimerLabel().timerStart();
 		}
-		if(e.getSource() == item7)
+		if(e.getSource() == item7) // Fermer
 			System.exit(0);
+		if(e.getSource() == item3) // Pause 
+		{
+			this.soundClip.getClip().stop();
+			this.info.getTimerLabel().timerStop();
+			item3.setEnabled(false);
+		}
+		if(e.getSource() == item2) // Continuer
+		{
+			this.soundClip.getClip().start();
+			this.info.getTimerLabel().timerStart();
+			item3.setEnabled(true);
+		}
 	}
 
 	
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+		if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE)
+		{
+			System.out.println("BACKSPACE");
+		}
 	}
 
 	
@@ -162,7 +196,15 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+		int key = e.getKeyCode();
+		System.out.println("ok");
+		if(key == 17 && !item3.isEnabled())
+		{
+			this.soundClip.getClip().start();
+			this.info.getTimerLabel().timerStart();
+			item3.setEnabled(true);
+		}
+			
 	}
 
 	public void mouseClicked(MouseEvent e) {

@@ -12,7 +12,7 @@ public class PlateauDeJeuModele extends Observable {
 	private Case cases[][]; // Modèle à obtenir
 	private Case casesShuffle[][];  // Réserve
 	private Case plateau[][]; // Plateau 
-	private boolean partieEnCours;
+	private boolean partieEnCours = false;
 	private final int taillePlateau = 4;
 	
 	public boolean getPartieEnCours() {
@@ -28,10 +28,6 @@ public class PlateauDeJeuModele extends Observable {
 		
 	}
 	
-	public void pivoterPiece()
-	{
-		
-	}
 	
 	public void miseAJour()
 	{
