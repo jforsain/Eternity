@@ -1,14 +1,12 @@
 package modele;
 
-public class Piece {
+public class Piece extends Case{
 	
 	private int idPiece;
 	private Quartier quartierNord;
 	private Quartier quartierEst;
 	private Quartier quartierSud;
 	private Quartier quartierOuest;
-	private int X;
-	private int Y;
 	private char orientation = 'N';
 	
 	public Piece(int pIdPiece, Quartier pQuartierNord, Quartier pQuartierEst, Quartier pQuartierSud, Quartier pQuartierOuest) {
@@ -21,21 +19,18 @@ public class Piece {
 	
 	/* ----- ACCESSEURS ------ */
 	
-	public int getPosX() {
-		return X;
-	}
-
-	public void setPosX(int x) {
-		X = x;
-	}
-
-	public int getPosY() {
-		return Y;
-	}
-
-	public void setPosY(int y) {
-		Y = y;
-	}
+//	public Piece(Piece a) {
+//		this.X = a.getPosX();
+//		this.Y = a.getPosY();
+//		this.orientation = a.orientation;
+//		this.quartierNord = a.getQuartierNord();
+//		this.quartierSud = a.getQuartierSud();
+//		this.quartierEst = a.getQuartierEst();
+//		this.quartierOuest = a.getQuartierOuest();
+//		this.idPiece = a.idPiece;
+//	}
+	
+	/* ----- ACCESSEURS ------ */
 
 	public int getIdPiece() {
 		return idPiece;
@@ -79,5 +74,27 @@ public class Piece {
 
 	public void setOrientation(char orientation) {
 		this.orientation = orientation;
+	}
+	
+	public void tourner() {
+			
+			Quartier tmp =  quartierNord;
+			
+			quartierNord = quartierOuest;
+			quartierOuest = quartierSud;
+			quartierSud = quartierEst;
+			quartierEst = tmp;
+	}
+	
+//	public Piece inverse(Piece a)
+//	{
+//		this.X =  a.getPosX();
+//		this.Y = a.getPosY();
+//		return this;
+//	}
+	
+	public boolean equals(Piece pPiece)
+	{
+		return (this.orientation == pPiece.getOrientation()) && (this.idPiece == pPiece.getIdPiece());
 	}
 }

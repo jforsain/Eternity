@@ -7,7 +7,9 @@ import java.awt.geom.Ellipse2D;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.JViewport;
 
 import modele.*;
 
@@ -16,6 +18,7 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 	
 	/* La VUE connait le MODELE */
 	private PlateauDeJeuModele plateauDeJeuModele;
+	
 	
 	public PlateauDeJeuVue(PlateauDeJeuModele pPlateauDeJeuModele)
 	{
@@ -34,7 +37,6 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		return 400;
 	}
 	
-	
 	public Dimension getPreferredSize()
 	{
 		return new Dimension(getWidth(), getHeight());
@@ -44,21 +46,21 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 	public void paint(Graphics graphics)
 	{
 		super.paint(graphics);
-		if(this.plateauDeJeuModele.getPieces() != null)
+		if(this.plateauDeJeuModele.getCasesShuffle() != null) /* Si le jeu n'a pas encore démarré */
 		{	
 			/* ---- TEST des positions ---- */
-			for(int i = 0; i < this.plateauDeJeuModele.getPieces().length; i++)
+			for(int i = 0; i < this.plateauDeJeuModele.getPlateau().length; i++)
 			{
-				for(int j = 0; j < this.plateauDeJeuModele.getPieces()[i].length; j++)
+				for(int j = 0; j < this.plateauDeJeuModele.getPlateau()[i].length; j++)
 				{
-					this.plateauDeJeuModele.getPieces()[i][j].setPosX(j);
-					this.plateauDeJeuModele.getPieces()[i][j].setPosY(i);
+					this.plateauDeJeuModele.getPlateau()[i][j].setPosX(j);
+					this.plateauDeJeuModele.getPlateau()[i][j].setPosY(i);
 				}
 			}
 					
-			for(int i = 0; i < this.plateauDeJeuModele.getPieces().length; i++)
-				for(int j = 0; j < this.plateauDeJeuModele.getPieces()[i].length; j++)
-					paintPiece(graphics, this.plateauDeJeuModele.getPieces()[i][j]);
+			for(int i = 0; i < this.plateauDeJeuModele.getPlateau().length; i++)
+				for(int j = 0; j < this.plateauDeJeuModele.getPlateau()[i].length; j++)
+					paintCase(graphics, this.plateauDeJeuModele.getPlateau()[i][j]);
 		}
 	}
 	
@@ -90,17 +92,24 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 	}
 	
 	// Cette méthode s'occupe de dessiner les pièces avec leurs syboles respectifs.
-	public void paintPiece(Graphics graphics, Piece piece)
+	public void paintCase(Graphics graphics, Case pCase)
 	{	
-		paintQuartier(graphics, piece.getQuartierNord(), 0, piece.getPosX(), piece.getPosY());
-		paintQuartier(graphics, piece.getQuartierEst(), 1, piece.getPosX(), piece.getPosY());
-		paintQuartier(graphics, piece.getQuartierSud(), 2, piece.getPosX(), piece.getPosY());
-		paintQuartier(graphics, piece.getQuartierOuest(), 3, piece.getPosX(), piece.getPosY());
-		
-		paintSymbole(graphics, piece.getQuartierNord(), 0, piece.getPosX(), piece.getPosY());
-		paintSymbole(graphics, piece.getQuartierEst(), 1,  piece.getPosX(), piece.getPosY());
-		paintSymbole(graphics, piece.getQuartierSud(), 2,  piece.getPosX(), piece.getPosY());
-		paintSymbole(graphics, piece.getQuartierOuest(), 3,  piece.getPosX(), piece.getPosY());
+		if(pCase instanceof Piece)
+		{
+			paintQuartier(graphics, ((Piece) pCase).getQuartierNord(), 0, ((Piece) pCase).getPosX(), ((Piece) pCase).getPosY());
+			paintQuartier(graphics, ((Piece) pCase).getQuartierEst(), 1, ((Piece) pCase).getPosX(), ((Piece) pCase).getPosY());
+			paintQuartier(graphics, ((Piece) pCase).getQuartierSud(), 2, ((Piece) pCase).getPosX(), ((Piece) pCase).getPosY());
+			paintQuartier(graphics, ((Piece) pCase).getQuartierOuest(), 3, ((Piece) pCase).getPosX(), ((Piece) pCase).getPosY());
+			
+			paintSymbole(graphics, ((Piece) pCase).getQuartierNord(), 0, ((Piece) pCase).getPosX(), ((Piece) pCase).getPosY());
+			paintSymbole(graphics, ((Piece) pCase).getQuartierEst(), 1,  ((Piece) pCase).getPosX(), ((Piece) pCase).getPosY());
+			paintSymbole(graphics, ((Piece) pCase).getQuartierSud(), 2,  ((Piece) pCase).getPosX(), ((Piece) pCase).getPosY());
+			paintSymbole(graphics, ((Piece) pCase).getQuartierOuest(), 3,  ((Piece) pCase).getPosX(), ((Piece) pCase).getPosY());
+		}
+		else
+		{
+			paintEmptyCase(graphics, ((Vide) pCase).getPosX(), ((Vide) pCase).getPosY());
+		}
 	}
 	
 	private void paintQuartier(Graphics graphics, Quartier quartier, int indice, int pPosX, int pPosY)
@@ -163,6 +172,21 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 					
 			}
 		}
+	}
+	
+	private void paintEmptyCase(Graphics graphics, int pPosX, int pPosY)
+	{
+		int x1 = pPosX * 100, x2 = pPosX * 100 + 100;
+		int y1 = pPosY * 100, y2 = pPosY * 100 + 100;
+		System.out.println("x1 : " + x1 + ", x2");
+		
+		int xT[] = {x1, x2, x2, x1};
+		int yT[] = {y1, y1, y2, y2};
+		
+		graphics.setColor(Color.GRAY);
+		graphics.fillPolygon(xT, yT, 4);
+		graphics.setColor(Color.BLACK);
+		graphics.drawPolygon(xT, yT, 4);
 	}
 	
 	/* ------ METHODES DESSINS SYMBOLES ------ */
@@ -293,18 +317,6 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		graphics.fillPolygon(xT, yT, 5);
 		graphics.setColor(Color.BLACK);
 		graphics.drawPolygon(xT, yT, 5);
-	}
-	
-	// A compléter
-	private void paintZigZag(Graphics graphics)
-	{
-		int xT[] = {50, 40, 45, 40, 45, 40, 45, 40, 45, 40, 60, 65, 60, 65, 60, 65, 60, 65, 60};
-		int yT[] = {50, 40, 35, 30, 25, 20, 15, 10, 5 , 0,  0,  5,  10, 15, 20, 25, 30, 35, 40};
-		graphics.setColor(Color.WHITE);
-		graphics.fillPolygon(xT, yT, 19);
-		graphics.setColor(Color.BLACK);
-		graphics.drawPolygon(xT, yT, 19);
-		
 	}
 	
 	private void paintSun(Graphics graphics, int posX, int posY, int xCentre, int yCentre, int indice, Color couleurSymbole)
@@ -461,16 +473,6 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		graphics.fillPolygon(xT2, yT2, 4);
 		graphics.setColor(Color.BLACK);
 		graphics.drawPolygon(xT2, yT2, 4);
-	}
-	
-	// A compléter
-	public void paintCircle(Graphics g, int x, int y, int diameter) 
-	{
-		   x = x - diameter/2;
-		   Graphics2D g2d = (Graphics2D)g;
-		   Ellipse2D.Double circle = new Ellipse2D.Double(x, y, diameter, diameter);
-		   g2d.setColor(Color.BLUE);
-		   g2d.fill(circle);   
 	}
 
 }
