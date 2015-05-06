@@ -124,6 +124,7 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 		pause.addActionListener(this);
 		continueGame.addActionListener(this);
 		stopGame.addActionListener(this);
+		loadGame.addActionListener(this);
 		this.info.getSolution().addActionListener(this);
 		this.info.getClearAll().addActionListener(this);
 		this.replay.getOui().addActionListener(this);
@@ -357,7 +358,14 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 					break;
 			}
 		}
+		
+		if(e.getSource() == this.loadGame)
+		{
+			LoadGame loadGame = new LoadGame(null, null);
+			setEnabled(false);
+		}
 	}
+	
 
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() == 115 && this.plateauDeJeuModele.getPartieEnPause()) // Touche F4
