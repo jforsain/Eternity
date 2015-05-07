@@ -131,12 +131,12 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 		this.replay.getNon().addActionListener(this);
 		
 		this.setTitle("Eternity");
-	    this.setSize(700, 700);
+//	    this.setSize(1000, 1000);
 	    this.setLocationRelativeTo(null);
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
-//	    this.getContentPane().add(this.titre, BorderLayout.CENTER);  
-	    this.getContentPane().add(this.jSplitPane2, BorderLayout.CENTER);
+	    this.getContentPane().add(this.titre, BorderLayout.CENTER);  
+//	    this.getContentPane().add(this.jSplitPane2, BorderLayout.CENTER);
 	    this.setFocusable(true);
 	    this.addKeyListener(this);
 	    
@@ -237,7 +237,7 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 					jSplitPane2.setRightComponent(this.info);
 					jSplitPane2.validate();
 				}
-//			    this.getContentPane().add(this.jSplitPane2, BorderLayout.CENTER);
+			    this.getContentPane().add(this.jSplitPane2, BorderLayout.CENTER);
 				this.plateauDeJeuModele.setPartieEnCours(true);
 				this.plateauDeJeuModele.setGiveup(false);
 				this.info.getSolution().setEnabled(true);
@@ -333,7 +333,7 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 			this.continueGame.setEnabled(false);
 			this.pause.setEnabled(false);
 			this.stopGame.setEnabled(false);
-//		    this.getContentPane().add(this.titre, BorderLayout.CENTER); 
+		    this.getContentPane().add(this.titre, BorderLayout.CENTER); 
 		}
 		
 		if(e.getSource() == this.stopGame)
@@ -344,7 +344,7 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 			switch(val)
 			{
 				case JOptionPane.YES_OPTION:
-//				    this.getContentPane().add(this.titre, BorderLayout.CENTER);
+				    this.getContentPane().add(this.titre, BorderLayout.CENTER);
 					this.stopGame.setEnabled(false);
 					this.pause.setEnabled(false);
 					break;

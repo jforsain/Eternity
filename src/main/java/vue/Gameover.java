@@ -28,5 +28,4 @@ public class Gameover extends JPanel{
 		super.paintComponent(graphics);
         graphics.drawImage(bufferedImage, 0, 0, null);
 	}
-	
 }
