@@ -21,6 +21,7 @@ import javax.swing.SwingUtilities;
 
 import vue.ChoisirPiecesVue;
 import vue.PlateauDeJeuVue;
+import modele.Case;
 import modele.Piece;
 import modele.PlateauDeJeuModele;
 
@@ -51,7 +52,8 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	private JMenuItem item8 = new JMenuItem("Aide...");
 	private JMenuItem item9 = new JMenuItem("A propos...");
 	
-	private Piece iscliqued;
+	private Case iscliqued;
+	private String vueIsCliqued;
 	
 	public EternityGUI(PlateauDeJeuModele pPlateauDeJeuModele, PlateauDeJeuVue pPlateauDeJeuVue, ChoisirPiecesVue pChoisirPiecesVue, Informations pInfos)
 	{
@@ -164,60 +166,77 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	}
 
 	public void mouseClicked(MouseEvent e) {
-//		// 100 pour taille case
-//				int horizontal = e.getX()/100; // n = Un/r - Uo  
-//				int vertical = e.getY()/100; // n = Un/r - Uo  
-//				
-//				if (SwingUtilities.isRightMouseButton(e) || e.isControlDown())      
-//				{
-//					Piece tmp = (Piece) this.plateauDeJeuModele.getCases()[vertical][horizontal];
-//					tmp.tourner();
-//					this.plateauDeJeuModele.miseAJour();
-//				}
-//				else
-//				{
-//
-//
-//					System.out.println("case : H " + horizontal + " ; V :" + vertical );
-//					
-//					if(iscliqued == null)
-//					{
-//						try
-//						{
-//							this.iscliqued = (Piece) this.plateauDeJeuModele.getCases()[vertical][horizontal];
-//							System.out.println("register");
-//						}
-//						catch (Exception exeption)
-//						{
-//							System.out.println("erreur register");
-//							this.iscliqued = null;
-//						}
-//							
-//						
-//					}
-//					else
-//					{
-//						
-//						try
-//						{
-//							Piece tmp = (Piece) this.plateauDeJeuModele.getCases()[vertical][horizontal];
-//							if(tmp.getIdPiece() != this.iscliqued.getIdPiece()){
-//								System.out.println("changement");
-//								this.plateauDeJeuModele.inverser(this.iscliqued, tmp);
-//							}
-//							this.iscliqued = null;
-//						}
-//						catch (Exception exeption)
-//						{
-//							System.out.println("erreur changement");
-//							this.iscliqued = null;
-//						}
-//
-//					}
-//						
-//				}
-//		// TODO Auto-generated method stub
-//		System.out.println(e.getSource());
-//		System.out.println(e.getX());
+		// 100 pour taille case
+				int horizontal = e.getX()/100; // n = Un/r - Uo  
+				int vertical = e.getY()/100; // n = Un/r - Uo  
+				Case tmp = null;
+				String vue = e.getSource().getClass().getName();
+				if (SwingUtilities.isRightMouseButton(e) || e.isControlDown())      
+				{
+					Piece tmpPiece = null;
+					if( vue == "vue.PlateauDeJeuVue")
+						tmpPiece = (Piece) this.plateauDeJeuModele.getPlateau()[vertical][horizontal];
+					else if( vue == "vue.ChoisirPiecesVue")
+						tmpPiece = (Piece) this.plateauDeJeuModele.getCasesShuffle()[vertical][horizontal];
+					
+					tmpPiece.tourner();
+					
+					this.plateauDeJeuModele.miseAJour();
+				}
+				else
+				{					
+					if(iscliqued == null)
+					{
+						try
+						{
+							
+							if( vue == "vue.PlateauDeJeuVue"){
+								this.iscliqued = this.plateauDeJeuModele.getPlateau()[vertical][horizontal];
+								this.vueIsCliqued = "vue.PlateauDeJeuVue";
+							}
+							else if( vue == "vue.ChoisirPiecesVue"){
+								this.iscliqued = this.plateauDeJeuModele.getCasesShuffle()[vertical][horizontal];
+								this.vueIsCliqued = "vue.ChoisirPiecesVue" ;
+							}
+							
+							System.out.println("register");
+						}
+						catch (Exception exeption)
+						{
+							System.out.println("erreur register");
+							this.iscliqued = null;
+						}
+							
+						
+					}
+					else
+					{
+						
+						try
+						{								
+								if( vue == "vue.PlateauDeJeuVue"){
+									tmp = this.plateauDeJeuModele.getPlateau()[vertical][horizontal];
+								}
+								else if( vue == "vue.ChoisirPiecesVue"){
+									tmp = this.plateauDeJeuModele.getCasesShuffle()[vertical][horizontal];
+								}
+								
+								this.plateauDeJeuModele.inverser(this.iscliqued, tmp, this.vueIsCliqued , vue);
+
+							this.iscliqued = null;
+							System.out.println("chargement");
+						}
+						catch (Exception exeption)
+						{
+							System.out.println("erreur changement");
+							this.iscliqued = null;
+						}
+
+					}
+						
+				}
+		// TODO Auto-generated method stub
+		//System.out.println(e.getSource());
+		//System.out.println(e.getX());
 	}
 }

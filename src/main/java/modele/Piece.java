@@ -17,16 +17,16 @@ public class Piece extends Case{
 		this.quartierOuest = pQuartierOuest;	
 	}
 	
-//	public Piece(Piece a) {
-//		this.X = a.getPosX();
-//		this.Y = a.getPosY();
-//		this.orientation = a.orientation;
-//		this.quartierNord = a.getQuartierNord();
-//		this.quartierSud = a.getQuartierSud();
-//		this.quartierEst = a.getQuartierEst();
-//		this.quartierOuest = a.getQuartierOuest();
-//		this.idPiece = a.idPiece;
-//	}
+	public Piece(Piece a) {
+		this.setPosX( a.getPosX() );
+		this.setPosY( a.getPosY() );
+		this.orientation = a.orientation;
+		this.quartierNord = a.getQuartierNord();
+		this.quartierSud = a.getQuartierSud();
+		this.quartierEst = a.getQuartierEst();
+		this.quartierOuest = a.getQuartierOuest();
+		this.idPiece = a.idPiece;
+	}
 	
 	/* ----- ACCESSEURS ------ */
 
@@ -75,21 +75,36 @@ public class Piece extends Case{
 	}
 	
 	public void tourner() {
-			
+	
 			Quartier tmp =  quartierNord;
 			
 			quartierNord = quartierOuest;
 			quartierOuest = quartierSud;
 			quartierSud = quartierEst;
 			quartierEst = tmp;
+			
+			switch(this.orientation){
+			case 'N':
+				this.setOrientation('E');
+				break;
+			case 'S':
+				this.setOrientation('O');
+				break;
+			case 'E':
+				this.setOrientation('S');
+				break;
+			case 'O':
+				this.setOrientation('N');
+				break;
+			}
 	}
 	
-//	public Piece inverse(Piece a)
-//	{
-//		this.X =  a.getPosX();
-//		this.Y = a.getPosY();
-//		return this;
-//	}
+	public Piece inverse(Piece a)
+	{
+		this.setPosX( a.getPosX() );
+		this.setPosY( a.getPosY() );
+		return this;
+	}
 	
 	public boolean equals(Piece pPiece)
 	{

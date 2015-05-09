@@ -28,4 +28,10 @@ public class Case {
 	public void setPosY(int y) {
 		Y = y;
 	}
+	
+	public void inverse(int x,int y)
+	{
+		this.setPosX( x );
+		this.setPosY( y );
+	}
 }

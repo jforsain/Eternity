@@ -59,7 +59,37 @@ public class ChoisirPiecesVue extends JPanel implements Observer{
 					
 			for(int i = 0; i < this.plateauDeJeuModele.getCasesShuffle().length; i++)
 				for(int j = 0; j < this.plateauDeJeuModele.getCasesShuffle()[i].length; j++)
-					paintPiece(graphics, (Piece) this.plateauDeJeuModele.getCasesShuffle()[i][j]);
+					if( this.plateauDeJeuModele.getCasesShuffle()[i][j] instanceof Piece)
+						paintPiece(graphics, (Piece) this.plateauDeJeuModele.getCasesShuffle()[i][j]);
+					//else
+						//Paint Case Vide 
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
 		}
 	}
 	

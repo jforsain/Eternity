@@ -156,15 +156,89 @@ public class PlateauDeJeuModele extends Observable {
 		return quartiers.get(nbreAleatoire);
 	}
 
+	public void inverser(Case a, Case b,String vueA, String vueB) {
+		try
+		{
+			a = (Piece) a;
+			b = (Piece) b;
+		}
+		catch (Exception exeption)
+		{
+			//pas de Catch
+		}
+		
+		
+		if(a instanceof Piece && b instanceof Piece){//entre deux piece
+			Piece tmpA = new Piece((Piece)a);
+			Piece tmpB = new Piece((Piece)b);
+			
+			tmpB.setPosX(a.getPosX());
+			tmpB.setPosY(a.getPosY());
+			if(vueA == "vue.ChoisirPiecesVue")
+				casesShuffle[a.getPosY()][a.getPosX()] = tmpB;
+			else
+				plateau[a.getPosY()][a.getPosX()] = tmpB;
+				
+			
+			tmpA.setPosX(b.getPosX());
+			tmpA.setPosY(b.getPosY());
+			if(vueB == "vue.ChoisirPiecesVue")
+				casesShuffle[b.getPosY()][b.getPosX()] = tmpA;
+			else
+				plateau[b.getPosY()][b.getPosX()] = tmpA;
+			
+		}
+		else if(a instanceof Piece || b instanceof Piece)//1vide et 1piece
+		{
+			if(a instanceof Piece){
+				Piece tmpA = new Piece((Piece)a);
 
-//	public void inverser(Piece a, Piece b) {
-//		
-//		Piece tmpA = new Piece(a);
-//		Piece tmpB = new Piece(b);
-//		pieces[a.getPosY()][a.getPosX()] = tmpB.inverse(a);
-//		pieces[b.getPosY()][b.getPosX()] = tmpA.inverse(b);
-//		this.miseAJour();
-//	}
+				tmpA.setPosX(b.getPosX());
+				tmpA.setPosY(b.getPosY());
+				
+				Vide tmpB = new Vide();
+				tmpB.setPosX(a.getPosX());
+				tmpB.setPosY(a.getPosY());
+				
+				if(vueA == "vue.ChoisirPiecesVue")
+					casesShuffle[a.getPosY()][a.getPosX()] = tmpB;
+				else
+					plateau[a.getPosY()][a.getPosX()] = tmpB;
+				
+				if(vueB == "vue.ChoisirPiecesVue")
+					casesShuffle[b.getPosY()][b.getPosX()] = tmpA;
+				else
+					plateau[b.getPosY()][b.getPosX()] = tmpA;
+				
+			}
+			else if (b instanceof Piece){
+				Piece tmpB = new Piece((Piece)b);
+
+				tmpB.setPosX(a.getPosX());
+				tmpB.setPosY(a.getPosY());
+				
+				Vide tmpA = new Vide();
+				tmpA.setPosX(b.getPosX());
+				tmpA.setPosY(b.getPosY());
+				
+				if(vueB == "vue.ChoisirPiecesVue")
+					casesShuffle[b.getPosY()][b.getPosX()] = tmpA;
+				else
+					plateau[b.getPosY()][b.getPosX()] = tmpA;
+				
+				if(vueA == "vue.ChoisirPiecesVue")
+					casesShuffle[a.getPosY()][a.getPosX()] = tmpB;
+				else
+					plateau[a.getPosY()][a.getPosX()] = tmpB;
+			}
+				
+		}
+		else{//cas 2 cases vide
+			//pas de changement
+		}
+			
+		this.miseAJour();
+	}
 	
 	/* ---- Méthode vérifiant si le jeu est terminé ---- */
 	public boolean isGameEnded()
@@ -172,6 +246,7 @@ public class PlateauDeJeuModele extends Observable {
 		boolean endGame = true;
 		for(int i = 0; i < casesShuffle.length; i++) {
 			for (int j = 0; j < casesShuffle[i].length; j++) {
+				if( casesShuffle[i][j] instanceof Piece)
 				if(!((Piece) casesShuffle[i][j]).equals((Piece) cases[i][j]))
 				{
 					endGame = false;
