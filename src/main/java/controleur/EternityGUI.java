@@ -44,6 +44,8 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	private Replay replay;
 	private Victoire victoire;
 	private Titre titre;
+	private LoadGame gamePanel;
+	private Savegame sauvegarderJeuPanel;
 	
 	private JSplitPane jSplitPane;
 	private JSplitPane jSplitPane2;
@@ -69,7 +71,7 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	private JButton solution = new JButton("Solution");
 	private JButton ouiRejouer = new JButton();
 	private JButton nonRejouer = new JButton();
-	private JButton ouiGame = new JButton("OK");
+	private JButton okGame = new JButton("OK");
 	private JButton annulerGame = new JButton("Annuler");
 	private JButton ouiTextfieldSaveGame = new JButton("OK");
 	private JButton annulerTextfieldSaveGame= new JButton("Annuler");
@@ -81,6 +83,7 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	
 	public EternityGUI(PlateauDeJeuModele pPlateauDeJeuModele, PlateauDeJeuVue pPlateauDeJeuVue, ChoisirPiecesVue pChoisirPiecesVue)
 	{	
+		/* Instanciation + affectation */
 		this.choisirPiecesVue = pChoisirPiecesVue;
 		this.plateauDeJeuModele = pPlateauDeJeuModele;
 		this.plateauDeJeuVue = pPlateauDeJeuVue;
@@ -92,6 +95,8 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 		this.replay = new Replay(ouiRejouer, nonRejouer);
 		this.victoire = new Victoire();
 		this.titre = new Titre();
+		this.gamePanel = new LoadGame(okGame, annulerGame, "");
+		this.sauvegarderJeuPanel = new Savegame(ouiTextfieldSaveGame, annulerTextfieldSaveGame);
 		
 		this.jSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, plateauDeJeuVue, choisirPiecesVue);
 //		jSplitPane.setEnabled(false);
@@ -140,11 +145,15 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 		stopGame.addActionListener(this);
 		loadGame.addActionListener(this);
 		saveGame.addActionListener(this);
+		ouiRejouer.addActionListener(this);
+		nonRejouer.addActionListener(this);
+		clearAll.addActionListener(this);
+		solution.addActionListener(this);
+		okGame.addActionListener(this);
+		annulerGame.addActionListener(this);
+		ouiTextfieldSaveGame.addActionListener(this);
+		annulerTextfieldSaveGame.addActionListener(this);
 		
-		this.info.getSolution().addActionListener(this);
-		this.info.getClearAll().addActionListener(this);
-		this.replay.getOui().addActionListener(this);
-		this.replay.getNon().addActionListener(this);
 		
 		/* KEY LISTENERS */
 		this.setFocusable(true); // Ajout du focus pour intercepter les saisies claviers
@@ -152,7 +161,8 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 	    
 	    
 	    /* WINDOW LISTENER */
-	    
+	    this.gamePanel.addWindowListener(this);
+	    this.sauvegarderJeuPanel.addWindowListener(this);
 	    
 	    this.getContentPane().add(this.titre, BorderLayout.CENTER); // Ajout de l'écran de titre dans le panel
 	    
@@ -210,9 +220,9 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 
 	
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == nouveau || e.getSource() == this.replay.getOui()) // Nouvelle partie  
+		if(e.getSource() == nouveau || e.getSource() == this.replay.getOui()) // Clique sur 'Nouveau' ou 'Oui' quand on propose au joueur de rejouer 
 		{
-			if(this.plateauDeJeuModele.getPartieEnCours()) // Si la partie est déjà en cours (en pause
+			if(this.plateauDeJeuModele.getPartieEnCours()) // Si la partie est déjà en cours (en pause)
 			{
 				this.info.getTimerLabel().timerStop();
 				this.soundClip.getClip().stop();
@@ -396,8 +406,28 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 		
 		if(e.getSource() == this.loadGame || e.getSource() == this.saveGame) // Clique sur 'Charger'
 		{
-			LoadGame loadGame = new LoadGame(ouiGame, annulerGame);
+			if(this.plateauDeJeuModele.getPartieEnCours())
+			{
+				this.soundClip.getClip().stop();
+				this.info.getTimerLabel().timerStop();
+			}
+			
+			if(e.getSource() == this.loadGame)
+				this.gamePanel.setTitle("Charger partie");
+			else
+				this.gamePanel.setTitle("Sauvegarder partie");
 			this.setEnabled(false);
+			
+			this.gamePanel.setVisible(true);
+		}
+		
+		if(e.getSource() == this.okGame) // Clique sur OK selon que l'on ait cliqué sur 'Charger partie' ou 'Sauvegarder partie'
+		{
+			if(this.gamePanel.getTitle().equals("Sauvegarder partie"))
+			{
+				this.gamePanel.setEnabled(false);
+				this.sauvegarderJeuPanel.setVisible(true);
+			}
 		}
 	}
 	
@@ -450,7 +480,14 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 
 	public void windowClosing(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+		if(e.getSource() == this.gamePanel)
+		{
+			this.setEnabled(true);
+		}
+		if(e.getSource() == this.sauvegarderJeuPanel)
+		{
+			this.gamePanel.setEnabled(true);
+		}
 	}
 
 	public void windowDeactivated(WindowEvent e) {

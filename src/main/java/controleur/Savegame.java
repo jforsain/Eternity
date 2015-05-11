@@ -16,10 +16,10 @@ public class Savegame extends JFrame {
 	private JButton okSaveGame;
 	private JButton annulerSaveGame;
 
-	public Savegame(JButton pOkSaveGame, JButton pAnnulerSaveGame) {
+	public Savegame(JButton pOkSauvegardeJeu, JButton pAnnulerSauvegardeJeu) {
 		setTitle("Nouveau nom");
-		this.okSaveGame = pOkSaveGame;
-		this.annulerSaveGame = pAnnulerSaveGame;
+		this.okSaveGame = pOkSauvegardeJeu;
+		this.annulerSaveGame = pAnnulerSauvegardeJeu;
 		this.textField.setDocument(new JTextFieldLimit(12));
 
 		JPanel panel = new JPanel();
