@@ -474,6 +474,4 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		graphics.setColor(Color.BLACK);
 		graphics.drawPolygon(xT2, yT2, 4);
 	}
-
 }
-	

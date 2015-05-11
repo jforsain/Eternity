@@ -76,7 +76,7 @@ public class QuartierDao {
 	        	quartiers.add(quartier);
 	        }
 	        
-	        /* ----- 3. Retour de le liste ----- */
+	        /* ----- 3. Retour de la liste ----- */
 	        return quartiers;
 	        
 		} catch (FileNotFoundException e) {
@@ -90,6 +90,4 @@ public class QuartierDao {
 		
 		return quartiers;
     }
-    
-    
 }

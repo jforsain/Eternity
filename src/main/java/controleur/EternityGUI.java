@@ -428,6 +428,48 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener, 
 				this.gamePanel.setEnabled(false);
 				this.sauvegarderJeuPanel.setVisible(true);
 			}
+			if(this.gamePanel.getTitle().equals("Charger partie"))
+			{
+				if(this.plateauDeJeuModele.chargerPartie(this.sauvegarderJeuPanel.getTextField().getText()))
+				{
+					this.sauvegarderJeuPanel.setVisible(false);
+					this.gamePanel.setEnabled(true);
+					this.gamePanel.setVisible(false);
+					this.setEnabled(true);
+					this.soundClip.getClip().loop(Clip.LOOP_CONTINUOUSLY);
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Le fichier n'existe pas", "Attention", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		}
+		
+		if(e.getSource() == this.annulerGame)
+		{
+			this.gamePanel.setVisible(false);
+			this.setEnabled(true);
+			if(this.plateauDeJeuModele.getPartieEnCours())
+			{
+				
+			}
+		}
+		
+		if(e.getSource() == this.ouiTextfieldSaveGame) // Clique sur 'OK' quand le texte est rentré
+		{
+			this.plateauDeJeuModele.sauvegarderPartie(this.sauvegarderJeuPanel.getTextField().getText());
+			this.sauvegarderJeuPanel.setVisible(false);
+			this.gamePanel.setEnabled(true);
+			this.gamePanel.setVisible(false);
+			this.setEnabled(true);
+			this.info.getTimerLabel().timerStart();
+			this.soundClip.getClip().loop(Clip.LOOP_CONTINUOUSLY);
+		}
+		
+		if(e.getSource() == this.annulerTextfieldSaveGame)
+		{
+			this.sauvegarderJeuPanel.setVisible(false);
+			this.gamePanel.setEnabled(true);
 		}
 	}
 	
