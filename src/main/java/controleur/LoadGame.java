@@ -23,6 +23,9 @@ public class LoadGame extends JFrame implements ListSelectionListener{
 	
 	public LoadGame(JButton pOk, JButton pCancel)
 	{
+		
+		setTitle("Load Game");
+		
 		JPanel panel = new JPanel();
 		JPanel panelBoutons = new JPanel();
 		
@@ -72,7 +75,6 @@ public class LoadGame extends JFrame implements ListSelectionListener{
 					)
 				);
 		
-		setTitle("Load Game");
 		setSize(400, 300);
 		setAlwaysOnTop(true);
 		setLocationRelativeTo(null);
