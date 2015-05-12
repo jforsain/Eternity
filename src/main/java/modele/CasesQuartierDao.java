@@ -12,7 +12,7 @@ import au.com.bytecode.opencsv.CSVReader;
 /* ---- Cette classe s'occupe de charger une partie  ------ */
 public class CasesQuartierDao {
 	
-	private final static String RESOURCES_PATH = "src/main/resources/fichiers_jeu/";
+	private final static String RESOURCES_PATH = "src/main/resources/fichiers_jeu/fichiers_csv/";
     private String pieces_file_name;
     private final static char SEPARATOR = ';';
     

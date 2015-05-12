@@ -81,4 +81,8 @@ public class Savegame extends JFrame {
 	public JTextField getTextField() {
 		return textField;
 	}
+	
+	public void setTextField(String textField) {
+		this.textField.setText(textField);
+	}
 }

@@ -11,7 +11,7 @@ import au.com.bytecode.opencsv.CSVReader;
 
 public class CasesPositionDao {
 	
-	private final static String RESOURCES_PATH = "src/main/resources/fichiers_jeu/";
+	private final static String RESOURCES_PATH = "src/main/resources/fichiers_jeu/fichiers_csv/";
     private String pieces_file_name;
     private final static char SEPARATOR = ';';
     private CasesQuartierDao casesQuartierDao;
@@ -59,10 +59,9 @@ public class CasesPositionDao {
 	        /*----- 2. Transformation des données en type adéquat ----- */
 	        for(String[] oneData : data)
 	        {	      
-	        	
 	        	int posX;
 	        	int posY;
-	        	char orientation;
+	        	char orientation = ' ';
 	        	int i = 0;
 	        	
 	        	String posxStr = oneData[2];
@@ -71,7 +70,8 @@ public class CasesPositionDao {
 	        	
 	        	posX = Integer.parseInt(posxStr);
 	        	posY = Integer.parseInt(posyStr);
-	        	orientation = orientationStr.charAt(0);
+	        	if(oneData[0].charAt(0) == 'P')
+	        		orientation = orientationStr.charAt(0);
 	        	
 	        	/* ------ 3. Recherche de l'idPiece à mettre à jour --------*/
 	        	

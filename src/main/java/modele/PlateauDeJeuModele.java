@@ -23,62 +23,64 @@ public class PlateauDeJeuModele extends Observable {
 	private boolean aUtiliseAide = false;
 	private boolean giveup = false;
 
-	public void sauvegarderPartie(String nomFichier) {
+	public boolean sauvegarderPartie(String nomFichier) {
 		
+		boolean sauvegardeOK = false;
 		String solutionPieces[][];
-		try {
-			
-			/* 1. Sauvegarde des positions des pièces S */
-			CSVWriter writer = new CSVWriter(new FileWriter("src/main/resources/"+nomFichier+"_position_solution.csv"), ';');
-			solutionPieces = conversionStringPositionPiece(cases);
-			for(String elem[]: solutionPieces)
-	     		writer.writeNext(elem);
-			writer.close();
-			
-			/* 2. Sauvegarde des quartiers des pièces S */
-			CSVWriter writer2 = new CSVWriter(new FileWriter("src/main/resources/"+nomFichier+"_quartier_solution.csv"), ';');
-			solutionPieces = conversionStringQuartierPiece(cases);
-			for(String elem[]: solutionPieces)
-	     		writer2.writeNext(elem);
-			writer2.close();
-			
-			/* 3. Sauvegarde des positions des pièces R */
-			CSVWriter writer3 = new CSVWriter(new FileWriter("src/main/resources/"+nomFichier+"_position_reserve.csv"), ';');
-			solutionPieces = conversionStringPositionPiece(casesShuffle);
-			for(String elem[]: solutionPieces)
-	     		writer3.writeNext(elem);
-			writer3.close();
-			
-			/* 4. Sauvegarde des quartiers des pièces R */
-			CSVWriter writer4 = new CSVWriter(new FileWriter("src/main/resources/"+nomFichier+"_quartier_reserve.csv"), ';');
-			solutionPieces = conversionStringQuartierPiece(casesShuffle);
-			for(String elem[]: solutionPieces)
-	     		writer4.writeNext(elem);
-			writer4.close();
-			
-			/* 5. Sauvegarde des positions des pièces P */
-			CSVWriter writer5 = new CSVWriter(new FileWriter("src/main/resources/"+nomFichier+"_position_plateau.csv"), ';');
-			solutionPieces = conversionStringPositionPiece(plateau);
-			for(String elem[]: solutionPieces)
-	     		writer5.writeNext(elem);
-			writer5.close();
-			
-			/* 6. Sauvegarde des quartiers des pièces P */
-			CSVWriter writer6 = new CSVWriter(new FileWriter("src/main/resources/"+nomFichier+"_quartier_plateau.csv"), ';');
-			solutionPieces = conversionStringQuartierPiece(plateau);
-			for(String elem[]: solutionPieces)
-	     		writer6.writeNext(elem);
-			writer6.close();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	private void lectureFichier()
-	{
 		
+		if(!TextFileWriter.iSNameExistOnFile(nomFichier))
+		{
+			try {
+				
+				/* 1. Sauvegarde des positions des pièces S */
+				CSVWriter writer = new CSVWriter(new FileWriter("src/main/resources/fichiers_jeu/fichiers_csv/"+nomFichier+"_position_solution.csv"), ';');
+				solutionPieces = conversionStringPositionPiece(cases);
+				for(String elem[]: solutionPieces)
+		     		writer.writeNext(elem);
+				writer.close();
+				
+				/* 2. Sauvegarde des quartiers des pièces S */
+				CSVWriter writer2 = new CSVWriter(new FileWriter("src/main/resources/fichiers_jeu/fichiers_csv/"+nomFichier+"_quartier_solution.csv"), ';');
+				solutionPieces = conversionStringQuartierPiece(cases);
+				for(String elem[]: solutionPieces)
+		     		writer2.writeNext(elem);
+				writer2.close();
+				
+				/* 3. Sauvegarde des positions des pièces R */
+				CSVWriter writer3 = new CSVWriter(new FileWriter("src/main/resources/fichiers_jeu/fichiers_csv/"+nomFichier+"_position_reserve.csv"), ';');
+				solutionPieces = conversionStringPositionPiece(casesShuffle);
+				for(String elem[]: solutionPieces)
+		     		writer3.writeNext(elem);
+				writer3.close();
+				
+				/* 4. Sauvegarde des quartiers des pièces R */
+				CSVWriter writer4 = new CSVWriter(new FileWriter("src/main/resources/fichiers_jeu/fichiers_csv/"+nomFichier+"_quartier_reserve.csv"), ';');
+				solutionPieces = conversionStringQuartierPiece(casesShuffle);
+				for(String elem[]: solutionPieces)
+		     		writer4.writeNext(elem);
+				writer4.close();
+				
+				/* 5. Sauvegarde des positions des pièces P */
+				CSVWriter writer5 = new CSVWriter(new FileWriter("src/main/resources/fichiers_jeu/fichiers_csv/"+nomFichier+"_position_plateau.csv"), ';');
+				solutionPieces = conversionStringPositionPiece(plateau);
+				for(String elem[]: solutionPieces)
+		     		writer5.writeNext(elem);
+				writer5.close();
+				
+				/* 6. Sauvegarde des quartiers des pièces P */
+				CSVWriter writer6 = new CSVWriter(new FileWriter("src/main/resources/fichiers_jeu/fichiers_csv/"+nomFichier+"_quartier_plateau.csv"), ';');
+				solutionPieces = conversionStringQuartierPiece(plateau);
+				for(String elem[]: solutionPieces)
+		     		writer6.writeNext(elem);
+				writer6.close();
+				sauvegardeOK = true;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return sauvegardeOK;
 	}
 	
 	private String[][] conversionStringPositionPiece(Case[][] pCases)
@@ -200,12 +202,12 @@ public class PlateauDeJeuModele extends Observable {
 	public boolean chargerPartie(String nameFile) {
 		
 		boolean chargementPartieOK = false;
-		
 		if(TextFileWriter.iSNameExistOnFile(nameFile))
 		{
 			CasesQuartierDao casesQuartierDaoSolution = new CasesQuartierDao(nameFile+"_quartier_solution.csv");
 			CasesPositionDao casesPositionDaoSolution= new CasesPositionDao(nameFile+"_position_solution.csv", casesQuartierDaoSolution);
 			this.setCases(convertArraytoMatrix(casesPositionDaoSolution.findCases()));
+			
 			
 			CasesQuartierDao casesQuartierDaoReserve = new CasesQuartierDao(nameFile+"_quartier_reserve.csv");
 			CasesPositionDao casesPositionDaoReserve= new CasesPositionDao(nameFile+"_position_reserve.csv", casesQuartierDaoReserve);
@@ -216,6 +218,8 @@ public class PlateauDeJeuModele extends Observable {
 			this.setPlateau(convertArraytoMatrix(casesPositionDaoPlateau.findCases()));
 			
 			chargementPartieOK = true;
+			
+			miseAJour();
 		}
 		return chargementPartieOK;
 	}

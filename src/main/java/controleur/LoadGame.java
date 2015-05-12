@@ -1,5 +1,6 @@
 package controleur;
 
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
@@ -13,17 +14,29 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import modele.TextFileWriter;
+
 public class LoadGame extends JFrame {
 	
-	private JLabel jLabel = new JLabel("Select a snapsot:");
+	private JLabel jLabel = new JLabel("Choisissez un fichier:");
 	private JButton okBouton;
 	private JButton annulerBouton;
 	private JList jList;
+
 	private String titreFenetre;
-	String names[] = {"Item", "Item", "Item", "Item", "Item", "Item", "Item", "Item", "Item", "Item"};
+	String names[] = new String[10];
 	
 	public LoadGame(JButton pOk, JButton pAnnuler, String pTitreFenetre)
 	{
+		names = TextFileWriter.listeNomFichiers();
+		for(int i = 0; i < names.length; i++)
+		{
+			if(names[i] == null)
+			{
+				names[i] = "--VIDE--";
+			}
+		}
+		
 		this.titreFenetre = pTitreFenetre;
 		this.okBouton = pOk;
 		this.annulerBouton = pAnnuler;
@@ -46,6 +59,7 @@ public class LoadGame extends JFrame {
 		jList.setFixedCellWidth(200);
 		jList.setFixedCellHeight(20);
 		jList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		jList.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		
 		layout.setHorizontalGroup(
 				layout.createParallelGroup()
@@ -87,5 +101,9 @@ public class LoadGame extends JFrame {
 
 	public void setTitreFenetre(String titreFenetre) {
 		this.titreFenetre = titreFenetre;
+	}
+	
+	public JList getjList() {
+		return jList;
 	}
 }
