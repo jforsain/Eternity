@@ -17,6 +17,8 @@ public class Piece extends Case{
 		this.quartierOuest = pQuartierOuest;	
 	}
 	
+	/* ----- ACCESSEURS ------ */
+	
 	public Piece(Piece a) {
 		this.setPosX( a.getPosX() );
 		this.setPosY( a.getPosY() );

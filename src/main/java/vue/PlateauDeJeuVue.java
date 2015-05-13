@@ -46,7 +46,7 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 	public void paint(Graphics graphics)
 	{
 		super.paint(graphics);
-		if(this.plateauDeJeuModele.getPlateau() != null) /* Si le jeu n'a pas encore démarré */
+		if(this.plateauDeJeuModele.getPartieEnCours() || this.plateauDeJeuModele.getGiveup()) /* Si le jeu a démarré */
 		{	
 			/* ---- TEST des positions ---- */
 			for(int i = 0; i < this.plateauDeJeuModele.getPlateau().length; i++)
@@ -178,7 +178,7 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 	{
 		int x1 = pPosX * 100, x2 = pPosX * 100 + 100;
 		int y1 = pPosY * 100, y2 = pPosY * 100 + 100;
-		System.out.println("x1 : " + x1 + ", x2");
+		
 		
 		int xT[] = {x1, x2, x2, x1};
 		int yT[] = {y1, y1, y2, y2};
@@ -474,6 +474,4 @@ public class PlateauDeJeuVue extends JPanel implements Observer{
 		graphics.setColor(Color.BLACK);
 		graphics.drawPolygon(xT2, yT2, 4);
 	}
-
 }
-	

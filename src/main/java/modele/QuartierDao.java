@@ -10,11 +10,11 @@ import au.com.bytecode.opencsv.CSVReader;
 
 public class QuartierDao {
 	
-	private final static String RESOURCES_PATH = "src/main/resources/";
-    private final static String ELEVES_FILE_NAME = "faces-01.csv";
+	private final static String RESOURCES_PATH = "src/main/resources/fichiers_jeu/fichiers_csv/";
+    private final static String ELEVES_FILE_NAME = "faces.csv";
     private final static char SEPARATOR = ';';
         
-    /* ---- Cette méthode charge le fichier faces-01.csv ----- */
+    /* ---- Cette méthode charge le fichier faces.csv ----- */
     public List<Quartier> findQuartiers()
     {
     
@@ -76,7 +76,7 @@ public class QuartierDao {
 	        	quartiers.add(quartier);
 	        }
 	        
-	        /* ----- 3. Retour de le liste ----- */
+	        /* ----- 3. Retour de la liste ----- */
 	        return quartiers;
 	        
 		} catch (FileNotFoundException e) {
@@ -87,9 +87,6 @@ public class QuartierDao {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		
 		return quartiers;
     }
-    
-    
 }
