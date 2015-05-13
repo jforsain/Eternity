@@ -1,35 +1,59 @@
 package modele;
 
-public class Piece extends Case{
-	
+public class Piece extends Case {
+
 	private int idPiece;
 	private Quartier quartierNord;
 	private Quartier quartierEst;
 	private Quartier quartierSud;
 	private Quartier quartierOuest;
 	private char orientation = 'N';
-	
-	public Piece(int pIdPiece, Quartier pQuartierNord, Quartier pQuartierEst, Quartier pQuartierSud, Quartier pQuartierOuest) {
+
+	public Piece(int pIdPiece, Quartier pQuartierNord, Quartier pQuartierEst,
+			Quartier pQuartierSud, Quartier pQuartierOuest) {
 		this.idPiece = pIdPiece;
 		this.quartierNord = pQuartierNord;
 		this.quartierEst = pQuartierEst;
 		this.quartierSud = pQuartierSud;
-		this.quartierOuest = pQuartierOuest;	
+		this.quartierOuest = pQuartierOuest;
 	}
-	
-	/* ----- ACCESSEURS ------ */
-	
-//	public Piece(Piece a) {
-//		this.X = a.getPosX();
-//		this.Y = a.getPosY();
-//		this.orientation = a.orientation;
-//		this.quartierNord = a.getQuartierNord();
-//		this.quartierSud = a.getQuartierSud();
-//		this.quartierEst = a.getQuartierEst();
-//		this.quartierOuest = a.getQuartierOuest();
-//		this.idPiece = a.idPiece;
-//	}
-	
+
+	public Piece(Piece a) {
+		this.setPosX(a.getPosX());
+		this.setPosY(a.getPosY());
+		this.orientation = a.orientation;
+		this.quartierNord = a.getQuartierNord();
+		this.quartierSud = a.getQuartierSud();
+		this.quartierEst = a.getQuartierEst();
+		this.quartierOuest = a.getQuartierOuest();
+		this.idPiece = a.idPiece;
+	}
+
+	public void tourner() {
+
+		Quartier tmp = quartierNord;
+
+		quartierNord = quartierOuest;
+		quartierOuest = quartierSud;
+		quartierSud = quartierEst;
+		quartierEst = tmp;
+
+		switch (this.orientation) {
+		case 'N':
+			this.setOrientation('E');
+			break;
+		case 'S':
+			this.setOrientation('O');
+			break;
+		case 'E':
+			this.setOrientation('S');
+			break;
+		case 'O':
+			this.setOrientation('N');
+			break;
+		}
+	}
+
 	/* ----- ACCESSEURS ------ */
 
 	public int getIdPiece() {
@@ -75,26 +99,15 @@ public class Piece extends Case{
 	public void setOrientation(char orientation) {
 		this.orientation = orientation;
 	}
-	
-	public void tourner() {
-			
-			Quartier tmp =  quartierNord;
-			
-			quartierNord = quartierOuest;
-			quartierOuest = quartierSud;
-			quartierSud = quartierEst;
-			quartierEst = tmp;
+
+	public Piece inverse(Piece a) {
+		this.setPosX(a.getPosX());
+		this.setPosY(a.getPosY());
+		return this;
 	}
-	
-//	public Piece inverse(Piece a)
-//	{
-//		this.X =  a.getPosX();
-//		this.Y = a.getPosY();
-//		return this;
-//	}
-	
-	public boolean equals(Piece pPiece)
-	{
-		return (this.orientation == pPiece.getOrientation()) && (this.idPiece == pPiece.getIdPiece());
+
+	public boolean equals(Piece pPiece) {
+		return (this.orientation == pPiece.getOrientation())
+				&& (this.idPiece == pPiece.getIdPiece());
 	}
 }

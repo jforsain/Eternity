@@ -1,6 +1,5 @@
 package modele;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -396,34 +395,153 @@ public class PlateauDeJeuModele extends Observable {
 		int nbreAleatoire = 1 + random.nextInt(quartiers.size() - 1);
 		return quartiers.get(nbreAleatoire);
 	}
-
-	// public void inverser(Piece a, Piece b) {
-	//
-	// Piece tmpA = new Piece(a);
-	// Piece tmpB = new Piece(b);
-	// pieces[a.getPosY()][a.getPosX()] = tmpB.inverse(a);
-	// pieces[b.getPosY()][b.getPosX()] = tmpA.inverse(b);
-	// this.miseAJour();
-	// }
-	
 	
 	/**
 	 * */
 	/* ---- Méthode vérifiant si le jeu est terminé ---- */
 	public boolean isGameEnded() {
+		
 		boolean endGame = true;
-		for (int i = 0; i < casesShuffle.length; i++) {
-			for (int j = 0; j < casesShuffle[i].length; j++) {
-				if (!((Piece) plateau[i][j]).equals((Piece) cases[i][j])) {
+		
+		for (int i = 0; i < plateau.length; i++) {
+			for (int j = 0; j < plateau[i].length; j++) {
+				if (plateau[i][j] instanceof Vide || (!((Piece)plateau[i][j]).equals((Piece)cases[i][j]))) {
 					endGame = false;
-					break;
 				}
+			
 			}
 			if (!endGame)
 				break;
 		}
+		
 		return endGame;
 	}
+	
+	public void inverser(Case a, Case b,String vueA, String vueB) {
+		try
+		{
+			a = (Piece) a;
+			b = (Piece) b;
+		}
+		catch (Exception exeption)
+		{
+			//pas de Catch
+		}
+		
+		
+		if(a instanceof Piece && b instanceof Piece){//entre deux piece
+			Piece tmpA = new Piece((Piece)a);
+			Piece tmpB = new Piece((Piece)b);
+			
+			tmpB.setPosX(a.getPosX());
+			tmpB.setPosY(a.getPosY());
+			if(vueA == "vue.ChoisirPiecesVue")
+				casesShuffle[a.getPosY()][a.getPosX()] = tmpB;
+			else
+				plateau[a.getPosY()][a.getPosX()] = tmpB;
+				
+			
+			tmpA.setPosX(b.getPosX());
+			tmpA.setPosY(b.getPosY());
+			if(vueB == "vue.ChoisirPiecesVue")
+				casesShuffle[b.getPosY()][b.getPosX()] = tmpA;
+			else
+				plateau[b.getPosY()][b.getPosX()] = tmpA;
+			
+		}
+		else if(a instanceof Piece || b instanceof Piece)//1vide et 1piece
+		{
+			if(a instanceof Piece){
+				Piece tmpA = new Piece((Piece)a);
+
+				tmpA.setPosX(b.getPosX());
+				tmpA.setPosY(b.getPosY());
+				
+				Vide tmpB = new Vide();
+				tmpB.setPosX(a.getPosX());
+				tmpB.setPosY(a.getPosY());
+				
+				if(vueA == "vue.ChoisirPiecesVue")
+					casesShuffle[a.getPosY()][a.getPosX()] = tmpB;
+				else
+					plateau[a.getPosY()][a.getPosX()] = tmpB;
+				
+				if(vueB == "vue.ChoisirPiecesVue")
+					casesShuffle[b.getPosY()][b.getPosX()] = tmpA;
+				else
+					plateau[b.getPosY()][b.getPosX()] = tmpA;
+				
+			}
+			else if (b instanceof Piece){
+				Piece tmpB = new Piece((Piece)b);
+
+				tmpB.setPosX(a.getPosX());
+				tmpB.setPosY(a.getPosY());
+				
+				Vide tmpA = new Vide();
+				tmpA.setPosX(b.getPosX());
+				tmpA.setPosY(b.getPosY());
+				
+				if(vueB == "vue.ChoisirPiecesVue")
+					casesShuffle[b.getPosY()][b.getPosX()] = tmpA;
+				else
+					plateau[b.getPosY()][b.getPosX()] = tmpA;
+				
+				if(vueA == "vue.ChoisirPiecesVue")
+					casesShuffle[a.getPosY()][a.getPosX()] = tmpB;
+				else
+					plateau[a.getPosY()][a.getPosX()] = tmpB;
+			}
+				
+		}
+		else{//cas 2 cases vide
+			//pas de changement
+		}
+			
+		this.miseAJour();
+	}
+	
+	public void clearPlateauDeJeuVue()
+	{
+		for(int i = 0; i < plateau.length; i++)
+		{
+			for(int j = 0; j < plateau[i].length; j++)
+			{
+				if(this.casesShuffle[i][j] instanceof Vide)
+				{
+					echangeCases(this.casesShuffle[i][j], i, j);
+				}
+			}
+		}
+		miseAJour();
+	}
+	
+	public void echangeCases(Case a, int pI, int pJ)
+	{
+		Case temp;
+		int i = 0;
+		int j = 0;
+		boolean echangeOK = false;
+		while(!echangeOK)
+		{
+			if(this.plateau[i][j] instanceof Piece)
+			{
+				temp = this.plateau[i][j];
+				this.plateau[i][j] = this.casesShuffle[pI][pJ];
+				this.casesShuffle[pI][pJ] = temp;
+				
+				echangeOK = true;
+			}
+			if(j == 3)
+			{
+				i++;
+				j = 0;
+			}
+			else
+				j++;
+		}
+	}
+	
 	
 	
 	/**
