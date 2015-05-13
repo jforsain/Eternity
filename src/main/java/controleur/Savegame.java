@@ -55,8 +55,10 @@ public class Savegame extends JFrame {
 				.addGroup(
 						layout.createParallelGroup().addComponent(panelBoutons)));
 
+		setResizable(false);
 		setAlwaysOnTop(true);
 		add(panel);
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.pack();
 		setLocationRelativeTo(null);
 	}

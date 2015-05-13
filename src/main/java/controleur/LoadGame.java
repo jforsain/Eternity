@@ -89,6 +89,7 @@ public class LoadGame extends JFrame {
 					)
 				);
 		
+		setResizable(false);
 		setSize(400, 300);
 		setAlwaysOnTop(true);
 		setLocationRelativeTo(null);

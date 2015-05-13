@@ -11,6 +11,12 @@ import java.util.Random;
 
 import au.com.bytecode.opencsv.CSVWriter;
 
+/**
+ * Cette classe représente le MODELE du projet Eternity.
+ * Elle représente le coeur algorithmique de l'application (traitements des données, intéractions avec les fichiers csv)
+ * @author Jean-Luc FORSAIN
+ * */
+
 public class PlateauDeJeuModele extends Observable {
 	/* Ne connait ni la VUE ni le CONTROLEUR */
 
@@ -23,6 +29,10 @@ public class PlateauDeJeuModele extends Observable {
 	private boolean aUtiliseAide = false;
 	private boolean giveup = false;
 
+	/**
+	 * Sauvegarde la partie en cours.
+	 * @return Retourne le résultat de la sauvegarde
+	 * */
 	public boolean sauvegarderPartie(String nomFichier) {
 		
 		boolean sauvegardeOK = false;
@@ -83,6 +93,8 @@ public class PlateauDeJeuModele extends Observable {
 		return sauvegardeOK;
 	}
 	
+	/** 
+	 * */
 	private String[][] conversionStringPositionPiece(Case[][] pCases)
 	{
 		String idPiece;
@@ -139,6 +151,8 @@ public class PlateauDeJeuModele extends Observable {
 		return casesModele;
 	}
 	
+	/**
+	 * */
 	private String[][] conversionStringQuartierPiece(Case[][] pCases)
 	{
 		String idPiece;
@@ -199,6 +213,8 @@ public class PlateauDeJeuModele extends Observable {
 		return casesModele;
 	}
 	
+	/**
+	 * */
 	public boolean chargerPartie(String nameFile) {
 		
 		boolean chargementPartieOK = false;
@@ -224,6 +240,8 @@ public class PlateauDeJeuModele extends Observable {
 		return chargementPartieOK;
 	}
 	
+	/**
+	 * */
 	private Case[][] convertArraytoMatrix(List<Case> pListecases)
 	{
 		Case[][] cases = new Case[4][4];
@@ -238,12 +256,16 @@ public class PlateauDeJeuModele extends Observable {
 		}
 		return cases;
 	}
-
+	
+	/**
+	 * */
 	public void miseAJour() {
 		setChanged();
 		notifyObservers();
 	}
-
+	
+	/***
+	 * /
 	/*----- Cette méthode s'occupe de générer un terrain aléatoire et qui servira de modèle à représenter  ----- */
 	public void nouvellePartie() {
 		int idPiece = 0;
@@ -326,6 +348,8 @@ public class PlateauDeJeuModele extends Observable {
 		miseAJour();
 	}
 
+	/**
+	 * */
 	/* ----- Cette méthode s'occupe de mélanger notre matrice ----- */
 	public void randomShuffleArray() {
 		int indice = 0;
@@ -351,7 +375,9 @@ public class PlateauDeJeuModele extends Observable {
 			}
 		}
 	}
-
+	
+	/**
+	 * */
 	/* ---- Cette méthode pemet d'initialiser notre terrain qui est vide ----- */
 	public void initialiserTerrain() {
 		plateau = new Case[4][4];
@@ -361,7 +387,9 @@ public class PlateauDeJeuModele extends Observable {
 			}
 		}
 	}
-
+	
+	/**
+	 * */
 	private Quartier getRandomQuartier(QuartierDao quartierDao) {
 		List<Quartier> quartiers = quartierDao.findQuartiers();
 		Random random = new Random();
@@ -377,7 +405,10 @@ public class PlateauDeJeuModele extends Observable {
 	// pieces[b.getPosY()][b.getPosX()] = tmpA.inverse(b);
 	// this.miseAJour();
 	// }
-
+	
+	
+	/**
+	 * */
 	/* ---- Méthode vérifiant si le jeu est terminé ---- */
 	public boolean isGameEnded() {
 		boolean endGame = true;
@@ -393,12 +424,16 @@ public class PlateauDeJeuModele extends Observable {
 		}
 		return endGame;
 	}
+	
+	
+	/**
+	 * ACCESSEURS
+	 * */
 
-	/* ----- ACCESSEURS ----- */
 	public boolean getPartieEnCours() {
 		return partieEnCours;
 	}
-
+	
 	public boolean getPartieEnPause() {
 		return partieEnPause;
 	}
