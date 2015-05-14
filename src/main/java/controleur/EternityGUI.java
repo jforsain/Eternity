@@ -115,7 +115,6 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener,
 		this.jSplitPane2.setEnabled(false);
 
 		initialisationFenetre();
-		
 
 		// On désactive déjà les items lors du démarrage du jeu
 		continueGame.setEnabled(false);
@@ -220,14 +219,12 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener,
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == nouveau || e.getSource() == this.newGame) 
-		{
-			if(!this.solution.isEnabled())
+		if (e.getSource() == nouveau || e.getSource() == this.newGame) {
+			if (!this.solution.isEnabled())
 				this.solution.setEnabled(true);
-			if(!this.clearAll.isEnabled())
+			if (!this.clearAll.isEnabled())
 				this.clearAll.setEnabled(true);
-			if (this.plateauDeJeuModele.getPartieEnCours()) 
-			{
+			if (this.plateauDeJeuModele.getPartieEnCours()) {
 				this.info.getTimerLabel().timerStop();
 				this.soundClip.getClip().stop();
 				int val = JOptionPane.showConfirmDialog(null,
@@ -374,7 +371,7 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener,
 				this.jSplitPane.validate(); // MàJ des 2 plateaux
 				this.plateauDeJeuModele.setPartieEnCours(false);
 				this.info.getTimerLabel().timerReset();
-				
+
 				this.solution.setEnabled(false);
 				this.clearAll.setEnabled(false);
 				this.continueGame.setEnabled(false);
@@ -402,7 +399,7 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener,
 				this.pause.setEnabled(false);
 				this.continueGame.setEnabled(false);
 				this.saveGame.setEnabled(false);
-				
+
 				this.plateauDeJeuModele.setPartieEnCours(false);
 				jSplitPane.setRightComponent(this.choisirPiecesVue);
 				jSplitPane.setLeftComponent(this.plateauDeJeuVue);
@@ -546,19 +543,20 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener,
 		if (e.getSource() == this.clearAll) {
 			this.plateauDeJeuModele.clearPlateauDeJeuVue();
 		}
-		
-		if(e.getSource() == this.help)
-		{
-			Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-		    if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
-		        try {
-		            desktop.browse(new URI("http://en.wikipedia.org/wiki/Eternity_II_puzzle"));
-		        } catch (Exception e1) {
-		            e1.printStackTrace();
-		        }
-		    }
+
+		if (e.getSource() == this.help) {
+			Desktop desktop = Desktop.isDesktopSupported() ? Desktop
+					.getDesktop() : null;
+			if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+				try {
+					desktop.browse(new URI(
+							"http://en.wikipedia.org/wiki/Eternity_II_puzzle"));
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
 		}
-		
+
 	}
 
 	public void keyPressed(KeyEvent e) {
@@ -614,7 +612,8 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener,
 
 	public void mouseClicked(MouseEvent e) {
 
-		if (plateauDeJeuModele.getPartieEnCours() && !this.plateauDeJeuModele.getPartieEnPause()) {
+		if (plateauDeJeuModele.getPartieEnCours()
+				&& !this.plateauDeJeuModele.getPartieEnPause()) {
 			// 100 pour taille case
 			int horizontal = e.getX() / 100; // n = Un/r - Uo
 			int vertical = e.getY() / 100; // n = Un/r - Uo
@@ -671,9 +670,8 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener,
 					}
 				}
 			}
-			
-			if(this.plateauDeJeuModele.isGameEnded())
-			{
+
+			if (this.plateauDeJeuModele.isGameEnded()) {
 				this.soundClip.getClip().stop();
 				this.info.getTimerLabel().timerStop();
 				continueGame.setEnabled(false);
@@ -704,19 +702,18 @@ public class EternityGUI extends JFrame implements Serializable, MouseListener,
 		if (e.getSource() == this.sauvegarderJeuPanel) {
 			this.gamePanel.setEnabled(true);
 		}
-		
-		if(e.getSource() == this.aPropos)
-		{
-			this.gamePanel.setEnabled(true);
+
+		if (e.getSource() == this.aPropos) {
+			this.setEnabled(true);
 			this.info.getTimerLabel().timerStart();
 		}
-		
-		if(e.getSource() == this.gamePanel)
-		{
-			if(this.plateauDeJeuModele.getPartieEnCours() && !this.plateauDeJeuModele.getPartieEnPause())
+
+		if (e.getSource() == this.gamePanel) {
+			if (this.plateauDeJeuModele.getPartieEnCours()
+					&& !this.plateauDeJeuModele.getPartieEnPause())
 				this.info.getTimerLabel().timerStart();
 			this.setEnabled(true);
-			
+
 		}
 	}
 
