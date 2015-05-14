@@ -13,7 +13,7 @@ public class AboutPanel extends JFrame{
 	
 	private JButton bouton;
 	private JPanel jPanel = new JPanel();
-	private JLabel jLabel = new JLabel("<html>Eternity<br/><br/>Version 1.0<br/><br/>Copyright© 2014-2015 ESIEA 3A-UFA<br/><br/>Web: <a href=\"esiea.fr\">www.esiea.fr</a></html>");
+	private JLabel jLabel = new JLabel("<html>Eternity<br/><br/>Version 0.9<br/><br/>Copyright© 2014-2015 ESIEA 3A-UFA<br/><br/>Web: <a href=\"esiea.fr\">www.esiea.fr</a></html>");
 	private JLabel image = new JLabel(new ImageIcon("src/main/resources/images/icone_piece.JPG"));
 	
 	public AboutPanel(JButton pBouton)

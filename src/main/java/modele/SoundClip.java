@@ -37,4 +37,23 @@ public class SoundClip {
 	public Clip getClip() {
 		return clip;
 	}
+	
+	public void setClip(String nomMusique)
+	{
+		try
+		{
+			URL url = this.getClass().getClassLoader().getResource(nomMusique);
+			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
+			AudioFormat format = audioInputStream.getFormat();
+			DataLine.Info info = new DataLine.Info(Clip.class, format);
+			this.clip = (Clip)AudioSystem.getLine(info);
+			clip.open(audioInputStream);
+		} 	catch (UnsupportedAudioFileException e) {
+	         e.printStackTrace();
+		} catch (IOException e) {
+	         e.printStackTrace();
+		} catch (LineUnavailableException e) {
+	         e.printStackTrace();
+		}
+	}
 }

@@ -154,4 +154,9 @@ public class TimerLabel extends JLabel implements ActionListener {
 			 nums[secs] + "." + 
 			 nums[hsecs] );
     }
+    
+    public String[] getTimer()
+    {
+    	return nums;
+    }
 } // TimerLabel

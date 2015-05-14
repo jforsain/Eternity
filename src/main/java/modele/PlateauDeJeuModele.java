@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Random;
 
+import controleur.TimerLabel;
 import au.com.bytecode.opencsv.CSVWriter;
 
 /**
@@ -82,6 +83,7 @@ public class PlateauDeJeuModele extends Observable {
 				for(String elem[]: solutionPieces)
 		     		writer6.writeNext(elem);
 				writer6.close();
+				
 				sauvegardeOK = true;
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
